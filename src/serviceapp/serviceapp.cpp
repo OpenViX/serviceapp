@@ -20,6 +20,8 @@
 #include "gstplayer.h"
 #include "exteplayer3.h"
 
+#include <Python.h>
+
 enum
 {
 	SUBSERVICES_INDEX_START = 1,
@@ -1350,15 +1352,6 @@ int eStaticServiceAppInfo::getInfo(const eServiceReference &ref, int w)
 			}
 		}
 		break;
-	case iServiceInformation::sFileSize:
-		{
-			struct stat s;
-			if (stat(ref.path.c_str(), &s) == 0)
-			{
-				return s.st_size;
-			}
-		}
-		break;
 	}
 	return iServiceInformation::resNA;
 }
@@ -1690,6 +1683,39 @@ static PyMethodDef serviceappMethods[] = {
 	 {NULL,NULL,0,NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
+static struct PyModuleDef moduledef = {
+	PyModuleDef_HEAD_INIT,
+	"serviceapp",         /* m_name */
+	"serviceapp",        /* m_doc */
+	-1,                  /* m_size */
+	serviceappMethods,   /* m_methods */
+	NULL,                /* m_reload */
+	NULL,                /* m_traverse */
+	NULL,                /* m_clear */
+	NULL,                /* m_free */
+};
+
+PyMODINIT_FUNC PyInit_serviceapp(void)
+{
+	PyModule_Create(&moduledef);
+	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
+	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
+	g_GstPlayerOptionsUser = new GstPlayerOptions();
+
+	g_ExtEplayer3OptionsServiceMP3 = new ExtEplayer3Options();
+	g_ExtEplayer3OptionsServiceExt3 = new ExtEplayer3Options();
+	g_ExtEplayer3OptionsUser = new ExtEplayer3Options();
+
+	g_ServiceAppOptionsServiceMP3 = new eServiceAppOptions();
+	g_ServiceAppOptionsServiceExt3 = new eServiceAppOptions();
+	g_ServiceAppOptionsServiceGst = new eServiceAppOptions();
+	g_ServiceAppOptionsUser = new eServiceAppOptions();
+
+	SSL_load_error_strings();
+	SSL_library_init();
+}
+#else
 PyMODINIT_FUNC
 initserviceapp(void)
 {
@@ -1710,3 +1736,4 @@ initserviceapp(void)
 	SSL_load_error_strings();
 	SSL_library_init();
 }
+#endif

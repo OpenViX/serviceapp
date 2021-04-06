@@ -1,82 +1,85 @@
-# SOME DESCRIPTIVE TITLE.
+# ServiceApp Italian translation for enigma2
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR: insanity & alexwilmac @vuplus-community.net ( 01-2019 )
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: ServiceApp Italian translation for enigma2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-28 11:52+0200\n"
-"PO-Revision-Date: 2018-07-28 11:56+0200\n"
-"Last-Translator: Pr2\n"
-"Language-Team: \n"
-"Language: fr\n"
+"PO-Revision-Date: 2019-01-24 21:18+0000\n"
+"Last-Translator: insanity-alexwilmac\n"
+"Language-Team: insanity & alexwilmac @vuplus-community.net\n"
+"Language: it_IT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: C:/Service APP\n"
 
 #: ../plugin/plugin.py:194
 msgid "AAC software decoding"
-msgstr "Décodage logiciel du AAC"
+msgstr "Decodifica AAC via software"
 
 #: ../plugin/plugin.py:198
 msgid "AC3 software decoding"
-msgstr "Décodage logiciel du AC3"
+msgstr "Decodifica AC3 via software"
 
 #: ../plugin/plugin.py:220
 msgid "Auto select stream"
-msgstr "Sélection automatique du flux"
+msgstr "Selezione automatica del flusso"
 
 #: ../plugin/plugin.py:216
 msgid "Auto turn on subtitles"
-msgstr "Activer automatiquement les sous-titres"
+msgstr "Attiva automaticamente i sottotitoli"
 
 #: ../plugin/plugin.py:217
 msgid "Automatically turn on subtitles if available."
-msgstr "Activer automatiquement les sous-titres si disponible."
+msgstr "Attiva automaticamente i sottotitoli, se disponibili"
 
 #: ../plugin/plugin.py:188
 msgid "Buffer duration"
-msgstr "Durée de la mémoire tampon"
+msgstr "Durata del buffer"
 
 #: ../plugin/plugin.py:186
 msgid "Buffer size"
-msgstr "Taille du fichier tampon"
+msgstr "Dimensione buffer"
 
 #: ../plugin/plugin.py:158
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Annulla"
 
 #: ../plugin/plugin.py:222
 msgid "Connection speed"
-msgstr "Vitesse de connexion"
+msgstr "Velocità di connessione"
 
 #: ../plugin/plugin.py:200
 msgid "DTS software decoding"
-msgstr "Décodage logiciel du DTS"
+msgstr "Decodifica DTS via software"
 
 #: ../plugin/plugin.py:318
 msgid "Detecting exteplayer3 player ..."
-msgstr "Détection du lecteur exteplayer3..."
+msgstr "Rilevamento del player exteplayer3 ..."
 
 #: ../plugin/plugin.py:315
 msgid "Detecting gstreamer player ..."
-msgstr "Détection du lecteur gstreamer..."
+msgstr "Rilevamento del player gstreamer ..."
 
 #: ../plugin/plugin.py:196
 msgid "EAC3 software decoding"
-msgstr "Décodage logiciel du EAC3"
+msgstr "Decodifica EAC3 via software"
 
 #: ../plugin/plugin.py:184
 msgid "Embedded subtitles"
-msgstr "Sous-titres embarqués"
+msgstr "Sottotitoli incorporati"
 
 #: ../plugin/plugin.py:246
 msgid "Enigma2 playback system"
-msgstr "Système de lecture Enigma2"
+msgstr "Modalità di riproduzione"
 
 #: ../plugin/plugin.py:271
 msgid ""
@@ -84,9 +87,9 @@ msgid ""
 "\n"
 "Do you want to restart it now?"
 msgstr ""
-"Le système de lecture Enigma2 a été modifié et Enigma2 doit être redémarré.\n"
+"La modalità di riproduzione è stata cambiata e il sistema deve essere riavviato\n"
 "\n"
-"Voulez-vous redémarrer maintenant?"
+"Vuoi farlo ora?"
 
 #: ../plugin/plugin.py:231
 msgid "ExtEplayer3"
@@ -94,19 +97,19 @@ msgstr "ExtEplayer3"
 
 #: ../plugin/plugin.py:237
 msgid "GstPlayer"
-msgstr "GstPlayer"
+msgstr "Player Gst"
 
 #: ../plugin/plugin.py:218
 msgid "HLS Explorer"
-msgstr "Explorateur de HLS"
+msgstr "Ricerca HLS"
 
 #: ../plugin/plugin.py:208
 msgid "LPCM injection"
-msgstr "Injection de LPCM"
+msgstr "Usa LPCM (6 Canali Surround)"
 
 #: ../plugin/plugin.py:202
 msgid "MP3 software decoding"
-msgstr "Décodage logiciel du MP3"
+msgstr "Decodifica MP3 via software"
 
 #: ../plugin/plugin.py:159
 msgid "Ok"
@@ -114,178 +117,179 @@ msgstr "Ok"
 
 #: ../plugin/plugin.py:408
 msgid "Play with ServiceExtEplayer3"
-msgstr "Lire avec ServiceExtEplayer3"
+msgstr "Riproduci con ExtEplayer3"
 
 #: ../plugin/plugin.py:410
 msgid "Play with ServiceGstPlayer"
-msgstr "Lire avec ServiceGstPlayer"
+msgstr "Riproduci con il player gst"
 
 #: ../plugin/plugin.py:249
 msgid "Player"
-msgstr "Lecteur"
+msgstr "Player"
 
 #: ../plugin/plugin.py:210
 msgid "RTMP protocol implementation"
-msgstr "Implémentation du protocole RTMP"
+msgstr "Implementazione del protocollo RTMP"
 
 #: ../plugin/plugin.py:183
 msgid "Select sink which you want to use."
-msgstr "Sélectionnez le « sink » que vous souhaitez utiliser."
+msgstr "Seleziona il recipiente che desideri utilizzare"
 
 #: ../plugin/plugin.py:247
 msgid "Select the player which will be used for Enigma2 playback."
-msgstr "Sélectionnez le lecteur qui sera utilisé pour la lecture par Enigma2."
+msgstr "Seleziona il player da utilizzare per la riproduzione."
 
 #: ../plugin/plugin.py:250
 msgid "Select the player which will be used in serviceapp for Enigma2 playback."
-msgstr "Sélectionnez le lecteur qui sera utilisé par serviceapp pour la lecture Enigma2."
+msgstr "Seleziona il player che verrà utilizzato in ServiceApp per la riproduzione."
 
 #: ../plugin/plugin.py:155 ../plugin/plugin.py:390 ../plugin/plugin.py:406
 #: ../plugin/plugin.py:408 ../plugin/plugin.py:410
 msgid "ServiceApp"
-msgstr "ServiceApp"
+msgstr "ServiceApp: gestione dei player"
 
 #: ../plugin/plugin.py:263
 #, python-format
 msgid "ServiceExtEplayer3 (%s)"
-msgstr "ServiceExtEplayer3 (%s)"
+msgstr "Servizio ExtEplayer3 (%s)"
 
 #: ../plugin/plugin.py:260
 #, python-format
 msgid "ServiceGstPlayer (%s)"
-msgstr "ServiceGstPlayer (%s)"
+msgstr "Servizio GstPlayer (%s)"
 
 #: ../plugin/plugin.py:252
 #, python-format
 msgid "ServiceMp3 (%s)"
-msgstr "ServiceMp3 (%s)"
+msgstr "Servizio Mp3 (%s)"
 
 #: ../plugin/plugin.py:189
 msgid "Set buffer duration in seconds."
-msgstr "Définir la durée tampon en secondes."
+msgstr "Imposta la durata del buffer in secondi"
 
 #: ../plugin/plugin.py:187
 msgid "Set buffer size in kilobytes."
-msgstr "Définir la taille de la mémoire tampon en kilo-octets."
+msgstr "Imposta la dimensione del buffer in kilobyte"
 
 #: ../plugin/plugin.py:223
 msgid "Set connection speed in kb/s, according to which you want to have streams auto-selected"
-msgstr "Définir la vitesse de connexion en kb/s, à partir de laquelle vous voulez avoir les flux sélectionnés automatiquement"
+msgstr "Imposta la velocità di connessione in Kb/s in modo che i flussi vengano selezionati automaticamente"
 
 #: ../plugin/plugin.py:211
 msgid "Set which RTMP protocol implementation will be used for playback of RTMP streams"
-msgstr "Défini quelle implémentation du protocole RTMP sera utilisée pour lire les flux RTMP"
+msgstr "Impostare quale implementazione del protocollo RTMP verrà utilizzata per la riproduzione di flussi RTMP"
 
 #: ../plugin/plugin.py:182
 msgid "Sink"
-msgstr "Sink"
+msgstr "Recipiente"
 
 #: ../plugin/plugin.py:209
 msgid "Software decoder use LPCM for injection (otherwise wav PCM will be used)"
-msgstr "Logiciel de décodage utiliser pour l’injection LPCM (autrement wav PCM sera utilisé)"
+msgstr "Il software del decoder userà LPCM (altrimenti sarà usata PCM)"
 
 #: ../plugin/plugin.py:206
 msgid "Stereo downmix"
-msgstr "Downmix stéréo"
+msgstr "Miscelazione stereo"
 
 #: ../plugin/plugin.py:295
 msgid "Stop playing this movie?"
-msgstr "Arrêter la lecture du film?"
+msgstr "Arrestare la riproduzione?"
 
 #: ../plugin/plugin.py:68
 msgid "To AAC ADTS"
-msgstr "À AAC ADTA"
+msgstr "In AAC ADTS"
 
 #: ../plugin/plugin.py:68
 msgid "To AAC LATM"
-msgstr "À LATM AAC"
+msgstr "In AAC LATM"
 
 #: ../plugin/plugin.py:195
 msgid "Turn on AAC software decoding."
-msgstr "Activer le décodage logiciel AAC."
+msgstr "Attiva la decodifica AAC via software"
 
 #: ../plugin/plugin.py:199
 msgid "Turn on AC3 software decoding."
-msgstr "Activer le décodage logiciel AC3."
+msgstr "Attiva la decodifica AC3 via software"
 
 #: ../plugin/plugin.py:201
 msgid "Turn on DTS software decoding."
-msgstr "Activer le décodage logiciel DTS."
+msgstr "Attiva la decodifica DTS via software"
 
 #: ../plugin/plugin.py:197
 msgid "Turn on EAC3 software decoding."
-msgstr "Activer le décodage logiciel EAC3."
+msgstr "Attiva la decodifica EAC3 via software"
 
 #: ../plugin/plugin.py:203
 msgid "Turn on MP3 software decoding."
-msgstr "Activer le décodage logiciel MP3."
+msgstr "Attiva la decodifica MP3 via software"
 
 #: ../plugin/plugin.py:205
 msgid "Turn on WMA1, WMA2, WMA/PRO software decoding."
-msgstr "Activer le décodage logiciel WMA1, WMA2, WMA/PRO."
+msgstr "Attivare la decodifica via software per WMA1, WMA2, WMA / PRO"
 
 #: ../plugin/plugin.py:221
 msgid "Turn on auto-selection of streams according to set Connection speed."
-msgstr "Activer la sélection automatique des flux selon la vitesse de connexion établie."
+msgstr "Attiva la selezione automatica dei flussi in base alla velocità di connessione impostata."
 
 #: ../plugin/plugin.py:207
 msgid "Turn on downmix to stereo, when software decoding is in use"
-msgstr "Activer le downmix vers stéréo, s’active lorsque le décodage logiciel est utilisé"
+msgstr "Attiva la miscelazione in stereo quando è in uso la decodifica del software"
 
 #: ../plugin/plugin.py:219
 msgid "Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices."
-msgstr "Activer l’explorateur pour récupérer les différentes qualités de flux via la liste HLS et les sélectionner via les sous-services."
+msgstr "Attiva per recuperare flussi di qualità diverse dalla playlist HLS e selezionali attraverso i sottoservizi."
 
 #: ../plugin/plugin.py:185
 msgid "Turn on the embedded subtitles support."
-msgstr "Activer le support des sous-titres embarqués."
+msgstr "Attiva il supporto per i sottotitoli incorporati"
 
 #: ../plugin/plugin.py:204
 msgid "WMA software decoding"
-msgstr "Décodage logiciel du WMA"
+msgstr "Decodifica WMA via software"
 
 #: ../plugin/plugin.py:31
 msgid "experimental"
-msgstr "expérimental"
+msgstr "sperimentale"
 
 #: ../plugin/plugin.py:33
 msgid "exteplayer3"
-msgstr "extEplayer3"
+msgstr "exteplayer3"
 
+# msgstr "app gestione servizi"
 #: ../plugin/plugin.py:50 ../plugin/plugin.py:51 ../plugin/plugin.py:53
 #: ../plugin/plugin.py:62 ../plugin/plugin.py:69 ../plugin/plugin.py:70
 #: ../plugin/plugin.py:71 ../plugin/plugin.py:72 ../plugin/plugin.py:73
 #: ../plugin/plugin.py:74 ../plugin/plugin.py:75
 msgid "false"
-msgstr "faux"
+msgstr "falso"
 
 #: ../plugin/plugin.py:33
 msgid "gstplayer"
-msgstr "gstplayer"
+msgstr "player gst"
 
 #: ../plugin/plugin.py:232 ../plugin/plugin.py:238
 msgid "not installed"
-msgstr "pas installé"
+msgstr "non installato"
 
 #: ../plugin/plugin.py:68
 msgid "off"
-msgstr "arrêt"
+msgstr "spento"
 
 #: ../plugin/plugin.py:28 ../plugin/plugin.py:41
 msgid "original"
-msgstr "original"
+msgstr "predefinita"
 
 #: ../plugin/plugin.py:41
 msgid "serviceapp"
-msgstr "serviceApp"
+msgstr "ServiceApp"
 
 #: ../plugin/plugin.py:406
 msgid "setup player framework"
-msgstr "cadre de configuration du lecteur"
+msgstr "imposta la struttura del player"
 
 #: ../plugin/plugin.py:50 ../plugin/plugin.py:51 ../plugin/plugin.py:53
 #: ../plugin/plugin.py:62 ../plugin/plugin.py:69 ../plugin/plugin.py:70
 #: ../plugin/plugin.py:71 ../plugin/plugin.py:72 ../plugin/plugin.py:73
 #: ../plugin/plugin.py:74 ../plugin/plugin.py:75
 msgid "true"
-msgstr "vrai"
+msgstr "vero"

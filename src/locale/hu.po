@@ -5,78 +5,78 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: serviceapp v1.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-07-28 11:52+0200\n"
-"PO-Revision-Date: 2018-07-28 11:56+0200\n"
-"Last-Translator: Pr2\n"
-"Language-Team: \n"
-"Language: fr\n"
+"PO-Revision-Date: 2020-01-31 14:05+0100\n"
+"Last-Translator: Alec <alex1vagyok@gmail.com>\n"
+"Language-Team: Alec <alex1vagyok@gmail.com>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.2.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plugin/plugin.py:194
 msgid "AAC software decoding"
-msgstr "Décodage logiciel du AAC"
+msgstr "AAC szoftver dekódolás"
 
 #: ../plugin/plugin.py:198
 msgid "AC3 software decoding"
-msgstr "Décodage logiciel du AC3"
+msgstr "AC3 szoftver dekódolás"
 
 #: ../plugin/plugin.py:220
 msgid "Auto select stream"
-msgstr "Sélection automatique du flux"
+msgstr "Automatikus adatfolyam kiválasztása"
 
 #: ../plugin/plugin.py:216
 msgid "Auto turn on subtitles"
-msgstr "Activer automatiquement les sous-titres"
+msgstr "A feliratok automatikus bekapcsolása"
 
 #: ../plugin/plugin.py:217
 msgid "Automatically turn on subtitles if available."
-msgstr "Activer automatiquement les sous-titres si disponible."
+msgstr "Automatikusan bekapcsolja a feliratokat, ha azok rendelkezésre állnak."
 
 #: ../plugin/plugin.py:188
 msgid "Buffer duration"
-msgstr "Durée de la mémoire tampon"
+msgstr "Puffer időtartama"
 
 #: ../plugin/plugin.py:186
 msgid "Buffer size"
-msgstr "Taille du fichier tampon"
+msgstr "Puffer mérete"
 
 #: ../plugin/plugin.py:158
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Mégsem"
 
 #: ../plugin/plugin.py:222
 msgid "Connection speed"
-msgstr "Vitesse de connexion"
+msgstr "Kapcsolat sebessége"
 
 #: ../plugin/plugin.py:200
 msgid "DTS software decoding"
-msgstr "Décodage logiciel du DTS"
+msgstr "DTS szoftver dekódolás"
 
 #: ../plugin/plugin.py:318
 msgid "Detecting exteplayer3 player ..."
-msgstr "Détection du lecteur exteplayer3..."
+msgstr "Exteplayer3 lejátszó észlelése..."
 
 #: ../plugin/plugin.py:315
 msgid "Detecting gstreamer player ..."
-msgstr "Détection du lecteur gstreamer..."
+msgstr "Gstreamer lejátszó észlelése..."
 
 #: ../plugin/plugin.py:196
 msgid "EAC3 software decoding"
-msgstr "Décodage logiciel du EAC3"
+msgstr "EAC3 szoftver dekódolás"
 
 #: ../plugin/plugin.py:184
 msgid "Embedded subtitles"
-msgstr "Sous-titres embarqués"
+msgstr "Beágyazott feliratok"
 
 #: ../plugin/plugin.py:246
 msgid "Enigma2 playback system"
-msgstr "Système de lecture Enigma2"
+msgstr "Enigma2 lejátszási rendszere"
 
 #: ../plugin/plugin.py:271
 msgid ""
@@ -84,9 +84,9 @@ msgid ""
 "\n"
 "Do you want to restart it now?"
 msgstr ""
-"Le système de lecture Enigma2 a été modifié et Enigma2 doit être redémarré.\n"
+"Az Enigma2 lejátszási rendszer megváltozott, és emiatt újra kell indítani azt\n"
 "\n"
-"Voulez-vous redémarrer maintenant?"
+"Újraindítja most?"
 
 #: ../plugin/plugin.py:231
 msgid "ExtEplayer3"
@@ -98,15 +98,15 @@ msgstr "GstPlayer"
 
 #: ../plugin/plugin.py:218
 msgid "HLS Explorer"
-msgstr "Explorateur de HLS"
+msgstr "HLS Explorer"
 
 #: ../plugin/plugin.py:208
 msgid "LPCM injection"
-msgstr "Injection de LPCM"
+msgstr "LPCM injection"
 
 #: ../plugin/plugin.py:202
 msgid "MP3 software decoding"
-msgstr "Décodage logiciel du MP3"
+msgstr "MP3 szoftver dekódolás"
 
 #: ../plugin/plugin.py:159
 msgid "Ok"
@@ -114,31 +114,31 @@ msgstr "Ok"
 
 #: ../plugin/plugin.py:408
 msgid "Play with ServiceExtEplayer3"
-msgstr "Lire avec ServiceExtEplayer3"
+msgstr "Lejátszás ExtEplayer3 lejátszóval"
 
 #: ../plugin/plugin.py:410
 msgid "Play with ServiceGstPlayer"
-msgstr "Lire avec ServiceGstPlayer"
+msgstr "Lejátszás GstPlayer lejátszóval"
 
 #: ../plugin/plugin.py:249
 msgid "Player"
-msgstr "Lecteur"
+msgstr "Lejátszó"
 
 #: ../plugin/plugin.py:210
 msgid "RTMP protocol implementation"
-msgstr "Implémentation du protocole RTMP"
+msgstr "RTMP protokoll implementációja"
 
 #: ../plugin/plugin.py:183
 msgid "Select sink which you want to use."
-msgstr "Sélectionnez le « sink » que vous souhaitez utiliser."
+msgstr "Jelölje ki a használni kívánt fogadót."
 
 #: ../plugin/plugin.py:247
 msgid "Select the player which will be used for Enigma2 playback."
-msgstr "Sélectionnez le lecteur qui sera utilisé pour la lecture par Enigma2."
+msgstr "Válassza ki azt a lejátszót, amelyet az Enigma2 a lejátszáshoz fog használni."
 
 #: ../plugin/plugin.py:250
 msgid "Select the player which will be used in serviceapp for Enigma2 playback."
-msgstr "Sélectionnez le lecteur qui sera utilisé par serviceapp pour la lecture Enigma2."
+msgstr "Válassza ki azt a lejátszót, amelyet az Enigma2 a lejátszáshoz a serviceapp-ban fog használni."
 
 #: ../plugin/plugin.py:155 ../plugin/plugin.py:390 ../plugin/plugin.py:406
 #: ../plugin/plugin.py:408 ../plugin/plugin.py:410
@@ -162,102 +162,102 @@ msgstr "ServiceMp3 (%s)"
 
 #: ../plugin/plugin.py:189
 msgid "Set buffer duration in seconds."
-msgstr "Définir la durée tampon en secondes."
+msgstr "Állítsa be a puffer időtartamát másodpercben."
 
 #: ../plugin/plugin.py:187
 msgid "Set buffer size in kilobytes."
-msgstr "Définir la taille de la mémoire tampon en kilo-octets."
+msgstr "Állítsa be a puffer méretét kilobájtban."
 
 #: ../plugin/plugin.py:223
 msgid "Set connection speed in kb/s, according to which you want to have streams auto-selected"
-msgstr "Définir la vitesse de connexion en kb/s, à partir de laquelle vous voulez avoir les flux sélectionnés automatiquement"
+msgstr "Állítsa be azt a kapcsolódási sebességet kb/s-ban, amely szerint az adatfolyamokat a rendszer automatikusan kiválasztja"
 
 #: ../plugin/plugin.py:211
 msgid "Set which RTMP protocol implementation will be used for playback of RTMP streams"
-msgstr "Défini quelle implémentation du protocole RTMP sera utilisée pour lire les flux RTMP"
+msgstr "Állítsa be, hogy melyik RTMP protokoll implementációt használja a rendszer az RTMP-adatfolyamok lejátszására"
 
 #: ../plugin/plugin.py:182
 msgid "Sink"
-msgstr "Sink"
+msgstr "Fogadó"
 
 #: ../plugin/plugin.py:209
 msgid "Software decoder use LPCM for injection (otherwise wav PCM will be used)"
-msgstr "Logiciel de décodage utiliser pour l’injection LPCM (autrement wav PCM sera utilisé)"
+msgstr "LPCM injection használata szoftveres dekóderhez (egyébként PCM injection használat)"
 
 #: ../plugin/plugin.py:206
 msgid "Stereo downmix"
-msgstr "Downmix stéréo"
+msgstr "Sztereó lekeverés"
 
 #: ../plugin/plugin.py:295
 msgid "Stop playing this movie?"
-msgstr "Arrêter la lecture du film?"
+msgstr "Megállítsam ezt a lejátszást?"
 
 #: ../plugin/plugin.py:68
 msgid "To AAC ADTS"
-msgstr "À AAC ADTA"
+msgstr "AAC az ADTS-hez"
 
 #: ../plugin/plugin.py:68
 msgid "To AAC LATM"
-msgstr "À LATM AAC"
+msgstr "AAC a LATM-hez"
 
 #: ../plugin/plugin.py:195
 msgid "Turn on AAC software decoding."
-msgstr "Activer le décodage logiciel AAC."
+msgstr "Itt kapcsolhatja be az AAC szoftverdekódolást."
 
 #: ../plugin/plugin.py:199
 msgid "Turn on AC3 software decoding."
-msgstr "Activer le décodage logiciel AC3."
+msgstr "Itt kapcsolhatja be az AC3 szoftverdekódolást."
 
 #: ../plugin/plugin.py:201
 msgid "Turn on DTS software decoding."
-msgstr "Activer le décodage logiciel DTS."
+msgstr "Itt kapcsolhatja be a DTS szoftverdekódolást."
 
 #: ../plugin/plugin.py:197
 msgid "Turn on EAC3 software decoding."
-msgstr "Activer le décodage logiciel EAC3."
+msgstr "Itt kapcsolhatja be az EAC3 szoftverdekódolást."
 
 #: ../plugin/plugin.py:203
 msgid "Turn on MP3 software decoding."
-msgstr "Activer le décodage logiciel MP3."
+msgstr "Itt kapcsolhatja be az MP3 szoftverdekódolást."
 
 #: ../plugin/plugin.py:205
 msgid "Turn on WMA1, WMA2, WMA/PRO software decoding."
-msgstr "Activer le décodage logiciel WMA1, WMA2, WMA/PRO."
+msgstr "Itt kapcsolhatja be a WMA1, WMA2, WMA/PRO szoftverdekódolást."
 
 #: ../plugin/plugin.py:221
 msgid "Turn on auto-selection of streams according to set Connection speed."
-msgstr "Activer la sélection automatique des flux selon la vitesse de connexion établie."
+msgstr "A kapcsolat sebességének beállítása szerint automatikusan történik az adatfolyam (stream) kiválasztása."
 
 #: ../plugin/plugin.py:207
 msgid "Turn on downmix to stereo, when software decoding is in use"
-msgstr "Activer le downmix vers stéréo, s’active lorsque le décodage logiciel est utilisé"
+msgstr "Sztereó lekeverés bekapcsolása, ha valamilyen szoftverdekódolás van használatban"
 
 #: ../plugin/plugin.py:219
 msgid "Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices."
-msgstr "Activer l’explorateur pour récupérer les différentes qualités de flux via la liste HLS et les sélectionner via les sous-services."
+msgstr "Ha különböző minőségű adatfolyamokat (stream) szeretne megjeleníteni, akkor kapcsolja be a HLS Explorert."
 
 #: ../plugin/plugin.py:185
 msgid "Turn on the embedded subtitles support."
-msgstr "Activer le support des sous-titres embarqués."
+msgstr "Itt kapcsolhatja be a beágyazott feliratok támogatását."
 
 #: ../plugin/plugin.py:204
 msgid "WMA software decoding"
-msgstr "Décodage logiciel du WMA"
+msgstr "WMA szoftver dekódolás"
 
 #: ../plugin/plugin.py:31
 msgid "experimental"
-msgstr "expérimental"
+msgstr "kísérleti"
 
 #: ../plugin/plugin.py:33
 msgid "exteplayer3"
-msgstr "extEplayer3"
+msgstr "exteplayer3"
 
 #: ../plugin/plugin.py:50 ../plugin/plugin.py:51 ../plugin/plugin.py:53
 #: ../plugin/plugin.py:62 ../plugin/plugin.py:69 ../plugin/plugin.py:70
 #: ../plugin/plugin.py:71 ../plugin/plugin.py:72 ../plugin/plugin.py:73
 #: ../plugin/plugin.py:74 ../plugin/plugin.py:75
 msgid "false"
-msgstr "faux"
+msgstr "nem"
 
 #: ../plugin/plugin.py:33
 msgid "gstplayer"
@@ -265,27 +265,27 @@ msgstr "gstplayer"
 
 #: ../plugin/plugin.py:232 ../plugin/plugin.py:238
 msgid "not installed"
-msgstr "pas installé"
+msgstr "nincs telepítve"
 
 #: ../plugin/plugin.py:68
 msgid "off"
-msgstr "arrêt"
+msgstr "kikapcsolva"
 
 #: ../plugin/plugin.py:28 ../plugin/plugin.py:41
 msgid "original"
-msgstr "original"
+msgstr "eredeti"
 
 #: ../plugin/plugin.py:41
 msgid "serviceapp"
-msgstr "serviceApp"
+msgstr "serviceapp"
 
 #: ../plugin/plugin.py:406
 msgid "setup player framework"
-msgstr "cadre de configuration du lecteur"
+msgstr "lejátszó keretrendszerének beállítása"
 
 #: ../plugin/plugin.py:50 ../plugin/plugin.py:51 ../plugin/plugin.py:53
 #: ../plugin/plugin.py:62 ../plugin/plugin.py:69 ../plugin/plugin.py:70
 #: ../plugin/plugin.py:71 ../plugin/plugin.py:72 ../plugin/plugin.py:73
 #: ../plugin/plugin.py:74 ../plugin/plugin.py:75
 msgid "true"
-msgstr "vrai"
+msgstr "igen"
