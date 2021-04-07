@@ -19,7 +19,7 @@ from Tools.BoundFunction import boundFunction
 from enigma import eEnv, eServiceReference
 
 from . import _
-import serviceapp_client
+from . import serviceapp_client
 
 
 SINKS_DEFAULT = ("", "")
