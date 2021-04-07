@@ -1698,7 +1698,7 @@ static struct PyModuleDef moduledef = {
 
 PyMODINIT_FUNC PyInit_serviceapp(void)
 {
-	PyModule_Create(&moduledef);
+	return PyModule_Create(&moduledef);
 	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
 	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
 	g_GstPlayerOptionsUser = new GstPlayerOptions();
