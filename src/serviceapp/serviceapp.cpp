@@ -1698,7 +1698,6 @@ static struct PyModuleDef moduledef = {
 
 PyMODINIT_FUNC PyInit_serviceapp(void)
 {
-	return PyModule_Create(&moduledef);
 	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
 	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
 	g_GstPlayerOptionsUser = new GstPlayerOptions();
@@ -1714,6 +1713,7 @@ PyMODINIT_FUNC PyInit_serviceapp(void)
 
 	SSL_load_error_strings();
 	SSL_library_init();
+	return PyModule_Create(&moduledef);
 }
 #else
 PyMODINIT_FUNC
