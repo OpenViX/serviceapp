@@ -672,7 +672,9 @@ void eServiceApp::gotExtPlayerMessage(int message)
 
 
 // __iPlayableService
-#if SIGCXX_MAJOR_VERSION == 2
+#if SIGCXX_MAJOR_VERSION == 3
+RESULT eServiceApp::connectEvent(const sigc::slot<void(iPlayableService*,int)>& event, ePtr< eConnection >& connection)
+#elif SIGCXX_MAJOR_VERSION == 2
 RESULT eServiceApp::connectEvent(const sigc::slot2< void, iPlayableService*, int >& event, ePtr< eConnection >& connection)
 #else
 RESULT eServiceApp::connectEvent(const Slot2< void, iPlayableService*, int >& event, ePtr< eConnection >& connection)
@@ -1352,6 +1354,15 @@ int eStaticServiceAppInfo::getInfo(const eServiceReference &ref, int w)
 			}
 		}
 		break;
+	case iServiceInformation::sFileSize:
+		{
+			struct stat s;
+			if (stat(ref.path.c_str(), &s) == 0)
+			{
+				return s.st_size;
+			}
+		}
+		break;
 	}
 	return iServiceInformation::resNA;
 }
@@ -1686,7 +1697,7 @@ static PyMethodDef serviceappMethods[] = {
 #if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef moduledef = {
 	PyModuleDef_HEAD_INIT,
-	"serviceapp",         /* m_name */
+	"serviceapp",        /* m_name */
 	"serviceapp",        /* m_doc */
 	-1,                  /* m_size */
 	serviceappMethods,   /* m_methods */
@@ -1695,45 +1706,33 @@ static struct PyModuleDef moduledef = {
 	NULL,                /* m_clear */
 	NULL,                /* m_free */
 };
-
-PyMODINIT_FUNC PyInit_serviceapp(void)
-{
-	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
-	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
-	g_GstPlayerOptionsUser = new GstPlayerOptions();
-
-	g_ExtEplayer3OptionsServiceMP3 = new ExtEplayer3Options();
-	g_ExtEplayer3OptionsServiceExt3 = new ExtEplayer3Options();
-	g_ExtEplayer3OptionsUser = new ExtEplayer3Options();
-
-	g_ServiceAppOptionsServiceMP3 = new eServiceAppOptions();
-	g_ServiceAppOptionsServiceExt3 = new eServiceAppOptions();
-	g_ServiceAppOptionsServiceGst = new eServiceAppOptions();
-	g_ServiceAppOptionsUser = new eServiceAppOptions();
-
-	SSL_load_error_strings();
-	SSL_library_init();
-	return PyModule_Create(&moduledef);
-}
-#else
-PyMODINIT_FUNC
-initserviceapp(void)
-{
-	Py_InitModule("serviceapp", serviceappMethods);
-	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
-	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
-	g_GstPlayerOptionsUser = new GstPlayerOptions();
-
-	g_ExtEplayer3OptionsServiceMP3 = new ExtEplayer3Options();
-	g_ExtEplayer3OptionsServiceExt3 = new ExtEplayer3Options();
-	g_ExtEplayer3OptionsUser = new ExtEplayer3Options();
-
-	g_ServiceAppOptionsServiceMP3 = new eServiceAppOptions();
-	g_ServiceAppOptionsServiceExt3 = new eServiceAppOptions();
-	g_ServiceAppOptionsServiceGst = new eServiceAppOptions();
-	g_ServiceAppOptionsUser = new eServiceAppOptions();
-
-	SSL_load_error_strings();
-	SSL_library_init();
-}
 #endif
+
+PyMODINIT_FUNC
+#if PY_MAJOR_VERSION >= 3
+PyInit_serviceapp(void)
+#else
+initserviceapp(void)
+#endif
+{
+	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
+	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
+	g_GstPlayerOptionsUser = new GstPlayerOptions();
+
+	g_ExtEplayer3OptionsServiceMP3 = new ExtEplayer3Options();
+	g_ExtEplayer3OptionsServiceExt3 = new ExtEplayer3Options();
+	g_ExtEplayer3OptionsUser = new ExtEplayer3Options();
+
+	g_ServiceAppOptionsServiceMP3 = new eServiceAppOptions();
+	g_ServiceAppOptionsServiceExt3 = new eServiceAppOptions();
+	g_ServiceAppOptionsServiceGst = new eServiceAppOptions();
+	g_ServiceAppOptionsUser = new eServiceAppOptions();
+
+	SSL_load_error_strings();
+	SSL_library_init();
+#if PY_MAJOR_VERSION >= 3
+	return PyModule_Create(&moduledef);
+#else
+	Py_InitModule("serviceapp", serviceappMethods);
+#endif
+}

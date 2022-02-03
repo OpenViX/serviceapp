@@ -293,7 +293,6 @@ void eConsoleContainer::readyWrite(int what)
         queue_data &d = outbuf.front();
         int wr = ::write( fd[1], d.data+d.dataSent, d.len-d.dataSent );
 //      if (wr < 0)
-//          eDebug("eConsoleContainer write failed (%m)");
 //      else
         d.dataSent += wr;
         if (d.dataSent == d.len)
