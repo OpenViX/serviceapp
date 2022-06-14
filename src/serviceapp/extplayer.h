@@ -2,11 +2,10 @@
 #define __extplayer_h
 
 #include <lib/base/ebase.h>
-#include <lib/base/message.h>
 #include <lib/base/thread.h>
 #include <lib/python/connections.h>
 
-
+#include "message.h"
 #include "cJSON/cJSON.h"
 #include "myconsole.h"
 #include "subtitles/subtitles.h"
