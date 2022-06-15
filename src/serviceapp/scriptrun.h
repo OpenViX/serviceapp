@@ -2,9 +2,10 @@
 #define SCRIPTRUN_H
 
 #include <lib/base/ebase.h>
+#include <lib/base/message.h>
 #include <lib/python/connections.h>
 #include <lib/base/thread.h>
-#include "message.h"
+
 #include "extplayer.h"
 #include "myconsole.h"
 
