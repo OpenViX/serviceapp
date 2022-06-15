@@ -20,7 +20,11 @@ enum
 	STD_ERROR,
 };
 
+#if SIGCXX_MAJOR_VERSION >= 2
 class PlayerApp: public sigc::trackable
+#else
+class PlayerApp: public Object
+#endif
 {
 	ePtr<eConsoleContainer> console;
 	std::string jsonstr;
@@ -175,7 +179,11 @@ public:
 };
 
 
+#if SIGCXX_MAJOR_VERSION >= 2
 class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, public iPlayerCallback
+#else
+class PlayerBackend: public Object, public eThread, public eMainloop, public iPlayerCallback
+#endif
 {
 	struct Message
 	{
