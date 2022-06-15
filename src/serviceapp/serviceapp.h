@@ -4,10 +4,9 @@
 #include <limits>
 #include <lib/service/iservice.h>
 #include <lib/base/ebase.h>
-#include <lib/base/message.h>
 #include <lib/base/thread.h>
 #include <lib/dvb/subtitle.h>
-
+#include "message.h"
 #include "common.h"
 #include "extplayer.h"
 #include "scriptrun.h"
