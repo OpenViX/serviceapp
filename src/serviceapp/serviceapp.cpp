@@ -672,7 +672,7 @@ void eServiceApp::gotExtPlayerMessage(int message)
 
 
 // __iPlayableService
-wRESULT eServiceApp::connectEvent(const sigc::slot<void(iPlayableService*,int)>& event, ePtr< eConnection >& connection)
+RESULT eServiceApp::connectEvent(const sigc::slot<void(iPlayableService*,int)>& event, ePtr< eConnection >& connection)
 {
 	connection = new eConnection((iPlayableService*)this, m_event.connect(event));
 	return 0;
