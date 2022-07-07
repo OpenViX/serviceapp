@@ -11,14 +11,14 @@
 
 int bidirpipe(int pfd[], const char *cmd , const char * const argv[], const char *cwd )
 {
+	int pfddummy[2];  /* HiSilicon dummy */
 	int pfdin[2];  /* from child to parent */
 	int pfdout[2]; /* from parent to child */
 	int pfderr[2]; /* stderr from child to parent */
 	int pid;       /* child's pid */
 
-	if ( pipe(pfdin) == -1 || pipe(pfdout) == -1 || pipe(pfderr) == -1)
+	if ( pipe(pfddummy) == -1 || pipe(pfdin) == -1 || pipe(pfdout) == -1 || pipe(pfderr) == -1 )
 		return(-1);
-
 	if ( ( pid = vfork() ) == -1 )
 		return(-1);
 	else if (pid == 0) /* child process */
@@ -30,9 +30,7 @@ int bidirpipe(int pfd[], const char *cmd , const char * const argv[], const char
 		if (dup(pfdout[0]) != 0 || dup(pfdin[1]) != 1 || dup(pfderr[1]) != 2 )
 			_exit(0);
 
-		if (close(pfdout[0]) == -1 || close(pfdout[1]) == -1 ||
-				close(pfdin[0]) == -1 || close(pfdin[1]) == -1 ||
-				close(pfderr[0]) == -1 || close(pfderr[1]) == -1 )
+		if (close(pfdout[0]) == -1 || close(pfdout[1]) == -1 || close(pfdin[0]) == -1 || close(pfdin[1]) == -1 || close(pfderr[0]) == -1 || close(pfderr[1]) == -1 )
 			_exit(0);
 
 		for (unsigned int i=3; i < 90; ++i )
@@ -109,8 +107,21 @@ int eConsoleContainer::execute(eMainloop *context, const char *cmdline, const ch
 	eDebug("[ServiceApp][eConsoleContainer] Starting %s", cmdline);
 	pid=-1;
 	killstate=0;
-
-	// get one read, one write and the err pipe to the prog..
+	int tmp_fd = -1;
+	tmp_fd = ::open("/dev/console", O_RDONLY | O_CLOEXEC);
+	eDebug("[ServiceApp][eConsoleContainer]  Opened tmp_fd: %d", tmp_fd);
+	if (tmp_fd == 0)
+	{
+		::close(tmp_fd);
+		tmp_fd = -1;	
+		fd0lock = ::open("/dev/console", O_RDONLY | O_CLOEXEC);
+		eDebug("[ServiceApp][eConsoleContainer] opening null fd returned: %d", fd0lock);
+	}
+	if (tmp_fd != -1)
+	{
+		::close(tmp_fd);
+	}
+	/* get one read, one write and the err pipe to the prog..  */
 	pid = bidirpipe(fd, cmdline, argv, m_cwd.empty() ? 0 : m_cwd.c_str());
 
 	if ( pid == -1 )

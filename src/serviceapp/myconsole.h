@@ -7,6 +7,8 @@
 #include <queue>
 #include <vector>
 
+extern int fd0lock;
+
 struct queue_data
 {
 	queue_data( char *data, int len )
