@@ -672,13 +672,7 @@ void eServiceApp::gotExtPlayerMessage(int message)
 
 
 // __iPlayableService
-#if SIGCXX_MAJOR_VERSION == 3
 RESULT eServiceApp::connectEvent(const sigc::slot<void(iPlayableService*,int)>& event, ePtr< eConnection >& connection)
-#elif SIGCXX_MAJOR_VERSION == 2
-RESULT eServiceApp::connectEvent(const sigc::slot2< void, iPlayableService*, int >& event, ePtr< eConnection >& connection)
-#else
-RESULT eServiceApp::connectEvent(const Slot2< void, iPlayableService*, int >& event, ePtr< eConnection >& connection)
-#endif
 {
 	connection = new eConnection((iPlayableService*)this, m_event.connect(event));
 	return 0;
@@ -1694,7 +1688,6 @@ static PyMethodDef serviceappMethods[] = {
 	 {NULL,NULL,0,NULL}
 };
 
-#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef moduledef = {
 	PyModuleDef_HEAD_INIT,
 	"serviceapp",        /* m_name */
@@ -1706,14 +1699,9 @@ static struct PyModuleDef moduledef = {
 	NULL,                /* m_clear */
 	NULL,                /* m_free */
 };
-#endif
 
 PyMODINIT_FUNC
-#if PY_MAJOR_VERSION >= 3
 PyInit_serviceapp(void)
-#else
-initserviceapp(void)
-#endif
 {
 	g_GstPlayerOptionsServiceMP3 = new GstPlayerOptions();
 	g_GstPlayerOptionsServiceGst = new GstPlayerOptions();
@@ -1730,9 +1718,5 @@ initserviceapp(void)
 
 	SSL_load_error_strings();
 	SSL_library_init();
-#if PY_MAJOR_VERSION >= 3
 	return PyModule_Create(&moduledef);
-#else
-	Py_InitModule("serviceapp", serviceappMethods);
-#endif
 }
