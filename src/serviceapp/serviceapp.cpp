@@ -1256,7 +1256,7 @@ int eServiceApp::getInfo(int w)
 			else if (v.description == "V_MPEG4/ISO/AVC") return 1;
 			else if (v.description.find("V_MPEG4") != std::string::npos) return 4;
 			else if (v.description == "V_MPEG1") return 6;
-			else if (v.description == "V_MPEGH/ISO/HEVC") return 7;
+			else if (v.description == "V_HEVC/ISO/MPEGH") return 7;
 			else if (v.description == "V_VP8") return 8;
 			else if (v.description == "V_VP9") return 9;
 
