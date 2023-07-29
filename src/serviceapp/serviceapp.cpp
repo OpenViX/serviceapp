@@ -310,7 +310,7 @@ void eServiceApp::fillSubservices()
 				ref.setUnsignedData(7, SUBSERVICES_INDEX_START + i);
 				// set parentTransportStreamId, since InfoBarSubservicesSupport
 				// checks this flag when creating subservices menu. If it's available
-				// at least for one subservice then it will allow to add subservices
+				// at least for one subservice then it will allow to add subservices 
 				// to bouquet or favorites, see subserviceSelection.
 				//
 				// If it's not available it will only allow to quickzap subservices and it
@@ -528,7 +528,7 @@ void eServiceApp::pushSubtitles()
 		end_ms = current->second.end_ms;
 		diff_start_ms = start_ms - decoder_ms;
 		diff_end_ms = end_ms - decoder_ms;
-
+		
 		//eDebug("eServiceApp::pushSubtitles - next subtitle: decoder: %d, start: %d, end: %d, duration_ms: %d, diff_start: %d, diff_end: %d : %s",
 		//	decoder_ms, start_ms, end_ms, end_ms - start_ms, diff_start_ms, diff_end_ms, current->second.text.c_str());
 
@@ -606,7 +606,7 @@ void eServiceApp::gotExtPlayerMessage(int message)
 		case PlayerMessage::stop:
 			eDebug("eServiceApp::gotExtPlayerMessage - stop");
 			// evEOF signals that end of file was reached and we
-			// could make operations like seek back or play again,
+			// could make operations like seek back or play again, 
 			// however when player signals stop, process
 			// has already ended, so there is no possibility to do so.
 			// This should be fixed on player's side so it doesn't end
@@ -899,36 +899,7 @@ RESULT eServiceApp::getTrackInfo(iAudioTrackInfo& trackInfo, unsigned int n)
 	{
 		return -1;
 	}
-
-	std::string desc = track.description;
-
-	std::map<std::string, std::string> audioReplacements = {
-		{"A_", ""},
-		{"EAC3", "AC3+"},
-		{"MPEG/L3", "AAC"},
-		{"IPCM", "AC3"},
-		{"LPCM", "AC3+"},
-		{"AAC_PLUS", "AAC+"},
-		{"AAC_LATM", "AAC"},
-		{"WMA/PRO", "WMA Pro"}};
-
-	if (!desc.empty())
-	{
-		for (auto const &x : audioReplacements)
-		{
-			std::string s = x.first;
-			if (desc.length() >= s.length())
-			{
-				size_t loc = desc.find(s);
-				if (loc != std::string::npos)
-				{
-					desc.replace(loc, s.length(), x.second);
-				}
-			}
-		}
-	}
-
-	trackInfo.m_description = desc;
+	trackInfo.m_description = track.description;
 	trackInfo.m_language = track.language_code;
 	return 0;
 }
@@ -1102,7 +1073,7 @@ RESULT eServiceApp::getSubtitleList(std::vector<struct SubtitleTrack> &subtitlel
 
 	std::string dirname, filename;
 	splitPath(subtitle_path, dirname, filename);
-	// TODO
+	// TODO 
 	//
 	// - try to find out language code from filename if possible
 	// - apply some sort of sorting which would add more relevant subtitles to beginning
@@ -1201,7 +1172,7 @@ int eServiceApp::getInfo(int w)
 	case sVideoWidth: return m_width;
 	case sFrameRate: return m_framerate;
 	case sProgressive: return m_progressive;
-	case sAspect:
+	case sAspect: 
 	{
 		if (m_height <= 0 || m_width <= 0)
 		{
@@ -1285,7 +1256,7 @@ int eServiceApp::getInfo(int w)
 			else if (v.description == "V_MPEG4/ISO/AVC") return 1;
 			else if (v.description.find("V_MPEG4") != std::string::npos) return 4;
 			else if (v.description == "V_MPEG1") return 6;
-			else if (v.description == "V_HEVC") return 7;
+			else if (v.description == "V_HEVC/ISO/MPEGH") return 7;
 			else if (v.description == "V_VP8") return 8;
 			else if (v.description == "V_VP9") return 9;
 
@@ -1471,7 +1442,7 @@ eServiceFactoryApp::eServiceFactoryApp()
 		extensions.clear();
 		sc->addServiceFactory(eServiceFactoryApp::idServiceGstPlayer, this, extensions);
 		sc->addServiceFactory(eServiceFactoryApp::idServiceExtEplayer3, this, extensions);
-
+		
 	}
 	m_service_info = new eStaticServiceAppInfo();
 }
@@ -1490,7 +1461,7 @@ eServiceFactoryApp::~eServiceFactoryApp()
 		sc->removeServiceFactory(eServiceFactoryApp::idServiceGstPlayer);
 		sc->removeServiceFactory(eServiceFactoryApp::idServiceExtEplayer3);
 	}
-
+	
 }
 
 
@@ -1526,12 +1497,12 @@ gstplayer_set_setting(PyObject *self, PyObject *args)
 
 	int settingId;
 	char *audioSink, *videoSink;
-	bool subtitlesEnable;
+	bool subtitlesEnable; 
 	long bufferSize, bufferDuration;
 
 	if (!PyArg_ParseTuple(args, "issbll", &settingId, &videoSink, &audioSink, &subtitlesEnable, &bufferSize, &bufferDuration))
 		return NULL;
-
+	
 	GstPlayerOptions *options = NULL;
 	switch (settingId)
 	{
@@ -1640,7 +1611,7 @@ serviceapp_set_setting(PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "ibbIb", &settingId, &HLSExplorer, &autoSelectStream, &connectionSpeedInKb, &autoTurnOnSubtitles))
 		return NULL;
-
+	
 	eServiceAppOptions *options = NULL;
 	switch (settingId)
 	{
