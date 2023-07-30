@@ -23,7 +23,7 @@ struct eServiceAppOptions
 	eServiceAppOptions():
 		autoTurnOnSubtitles(true),
 		preferEmbeddedSubtitles(false),
-		HLSExplorer(true), 
+		HLSExplorer(true),
 		autoSelectStream(true),
 		connectionSpeedInKb(std::numeric_limits<unsigned int>::max())
 	{};
@@ -192,7 +192,7 @@ class eServiceFactoryApp: public iServiceHandler
 public:
 	eServiceFactoryApp();
 	virtual ~eServiceFactoryApp();
-	enum { 
+	enum {
 		idServiceMP3 = 4097,
 		idServiceGstPlayer = 5001,
 		idServiceExtEplayer3 = 5002

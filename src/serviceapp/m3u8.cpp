@@ -24,7 +24,7 @@ int parse_attribute(char **ptr, char **key, char **value)
     if (ptr == NULL || *ptr == NULL || key == NULL || value == NULL)
         return -1;
 
-    char *end; 
+    char *end;
     char *p;
     p = end = strchr(*ptr, ',');
     if (end)
@@ -129,7 +129,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, Heade
                     __func__, X509_verify_cert_error_string(SSL_get_verify_result(ssl)));
         }
     }
-    std::string userAgent = "HbbTV/1.1.1 (+PVR+RTSP+DL; Sonic; TV44; 1.32.455; 2.002) Bee/3.5";    
+    std::string userAgent = "HbbTV/1.1.1 (+PVR+RTSP+DL; Sonic; TV44; 1.32.455; 2.002) Bee/3.5";
     HeaderMap::const_iterator it;
     if ((it = headers.find("User-Agent")) != headers.end())
     {

@@ -113,7 +113,7 @@ int eConsoleContainer::execute(eMainloop *context, const char *cmdline, const ch
 	if (tmp_fd == 0)
 	{
 		::close(tmp_fd);
-		tmp_fd = -1;	
+		tmp_fd = -1;
 		fd0lock = ::open("/dev/console", O_RDONLY | O_CLOEXEC);
 		eDebug("[ServiceApp][eConsoleContainer] opening null fd returned: %d", fd0lock);
 	}
@@ -323,7 +323,7 @@ void eConsoleContainer::readyWrite(int what)
 			delete [] d.data;
 			if ( filefd[0] == -1 )
 			/* emit */ dataSent(0);
-		}			
+		}
 		else
 			d.dataSent += wr;
 		if (d.dataSent == d.len)

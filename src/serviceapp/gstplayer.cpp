@@ -230,7 +230,7 @@ void GstPlayer::handleJsonOutput(cJSON *json)
 		v.width = cJSON_GetObjectItem(value, "w")->valueint;
 		v.height = cJSON_GetObjectItem(value, "h")->valueint;
 		v.framerate = cJSON_GetObjectItem(value, "f")->valueint;
-		
+
 		// this would crash if somebody was using older version
 		// of gstplayer where progressive was not passed
 		cJSON *progressive = cJSON_GetObjectItem(value, "p");
@@ -265,7 +265,7 @@ void GstPlayer::handleJsonOutput(cJSON *json)
 		{
 			cJSON *subitem=cJSON_GetArrayItem(value,i);
 			audioStream a;
-			a.id = cJSON_GetObjectItem(subitem, "id")->valueint; 
+			a.id = cJSON_GetObjectItem(subitem, "id")->valueint;
 			a.description = cJSON_GetObjectItem(subitem, "e")->valuestring;
 			a.language_code = cJSON_GetObjectItem(subitem, "n")->valuestring;
 			streams.push_back(a);
@@ -297,7 +297,7 @@ void GstPlayer::handleJsonOutput(cJSON *json)
 		{
 			cJSON *subitem=cJSON_GetArrayItem(value,i);
 			subtitleStream s;
-			s.id = cJSON_GetObjectItem(subitem, "id")->valueint; 
+			s.id = cJSON_GetObjectItem(subitem, "id")->valueint;
 			s.description = cJSON_GetObjectItem(subitem, "e")->valuestring;
 			s.language_code = cJSON_GetObjectItem(subitem, "n")->valuestring;
 			streams.push_back(s);
