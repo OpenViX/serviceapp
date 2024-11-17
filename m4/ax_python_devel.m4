@@ -72,7 +72,7 @@
 #   modified version of the Autoconf Macro, you may extend this special
 #   exception to the GPL to apply to your modified version as well.
 
-#serial 36 --------------Updated to cross compile for OE-Alliance Enigma2 git builds
+#serial 37 --------------Updated to cross compile for OE-Alliance Enigma2 git builds
 
 AU_ALIAS([AC_PYTHON_DEVEL], [AX_PYTHON_DEVEL])
 AC_DEFUN([AX_PYTHON_DEVEL],[
@@ -218,7 +218,8 @@ $ac_sysconfig_result])
 
 	if test $ax_python_devel_found = yes; then
 	   #
-	   # Check for Python library path
+	   # Check for Python library path here before check for Python include path
+	   # to pick up correct OE-A build library
 	   #
 	   AC_MSG_CHECKING([for Python library path])
 	   if test -z "$PYTHON_LIBS"; then
@@ -274,11 +275,11 @@ EOD`
 		#
 		if test -n "$ac_python_libdir" -a -n "$ac_python_library"
 		then
-			# use the official shared library
-			# if not Github workflow, cross compile ac_python_libdir = builds/distro/release/boxtype/tmp/work/boxtype-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+XXXXXXXXX-rx/recipe-sysroot/usr/lib
-			# so then pick up ac_python_libdir from previous search for Python library path for Cross compile
-			hosted="hosted"
+			# OE-A build, the original devel.m4 finds host python not build python
+			# Github worklflow obtains correct libs
+			# if not Github workflow, use modified ac_python_libdir (see above) for cross compile
 			# first check for git workflows via hosted
+			hosted="hosted"
 			if grep -q "${hosted}" <<< "$ac_python_libdir"
 			then
 				ac_python_libdir_XCompile=''
@@ -298,7 +299,7 @@ EOD`
 			PYTHON_LIBS="-L$ac_python_libdir -lpython$ac_python_version"
 		fi
 
-		if test -z "PYTHON_LIBS"; then
+		if test -z "$PYTHON_LIBS"; then
 			AC_MSG_WARN([
   Cannot determine location of your Python DSO. Please check it was installed with
   dynamic libraries enabled, or try setting PYTHON_LIBS by hand.
@@ -314,11 +315,8 @@ EOD`
 	   AC_SUBST([PYTHON_LIBS])
 	   #
 	   # Check for Python include path
+	   # for OE-A builds, include path is ac_python_libdir_XCompile(see above) plus found(host) python lib path
 	   #
-	   # checking for Python include path... should have -I/media/twol/TwolHome1/5.3/builds/openvix/release/vuuno4kse/tmp/work/vuuno4kse-oe-linux-gnueabi/enigma2/enigma2-7.3+gitAUTOINC+84579bb7a4-r0/recipe-sysroot/usr/include/python3.11
-	   # so pick up ac_python_libdir_XCompile from previous search for Python library path for Cross compile and front include...
-
-
 	   AC_MSG_CHECKING([for Python include path])
 	   if test -z "$PYTHON_CPPFLAGS"; then
 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
@@ -354,7 +352,7 @@ EOD`
 	   AC_MSG_CHECKING([for Python site-packages path])
 	   if test -z "$PYTHON_SITE_PKG"; then
 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
-			PYTHON_SITE_PKG2=`$PYTHON -c "
+			PYTHON_SITE_PKG=`$PYTHON -c "
 $IMPORT_SYSCONFIG;
 if hasattr(sysconfig, 'get_default_scheme'):
     scheme = sysconfig.get_default_scheme()
@@ -370,11 +368,11 @@ sitedir = sysconfig.get_path('purelib', scheme, vars={'base': prefix})
 print(sitedir)"`
 		else
 			# distutils.sysconfig way
-			PYTHON_SITE_PKG2=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+			PYTHON_SITE_PKG=`$PYTHON -c "$IMPORT_SYSCONFIG; \
 				print (sysconfig.get_python_lib(0,0));"`
 		fi
 	   fi
-	   PYTHON_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_SITE_PKG2"
+	   PYTHON_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_SITE_PKG"
 	   AC_MSG_RESULT([$PYTHON_SITE_PKG])
 	   AC_SUBST([PYTHON_SITE_PKG])
 
@@ -384,7 +382,7 @@ print(sitedir)"`
 	   AC_MSG_CHECKING([for Python platform specific site-packages path])
 	   if test -z "$PYTHON_PLATFORM_SITE_PKG"; then
 		if test "$IMPORT_SYSCONFIG" = "import sysconfig"; then
-			PYTHON_PLATFORM_SITE_PKG2=`$PYTHON -c "
+			PYTHON_PLATFORM_SITE_PKG=`$PYTHON -c "
 $IMPORT_SYSCONFIG;
 if hasattr(sysconfig, 'get_default_scheme'):
     scheme = sysconfig.get_default_scheme()
@@ -400,11 +398,11 @@ sitedir = sysconfig.get_path('platlib', scheme, vars={'platbase': prefix})
 print(sitedir)"`
 		else
 			# distutils.sysconfig way
-			PYTHON_PLATFORM_SITE_PKG2=`$PYTHON -c "$IMPORT_SYSCONFIG; \
+			PYTHON_PLATFORM_SITE_PKG=`$PYTHON -c "$IMPORT_SYSCONFIG; \
 				print (sysconfig.get_python_lib(1,0));"`
 		fi
 	   fi
-	   PYTHON_PLATFORM_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_PLATFORM_SITE_PKG2"
+	   PYTHON_PLATFORM_SITE_PKG="$ac_python_libdir_XCompile$PYTHON_PLATFORM_SITE_PKG"
 	   AC_MSG_RESULT([$PYTHON_PLATFORM_SITE_PKG])
 	   AC_SUBST([PYTHON_PLATFORM_SITE_PKG])
 
