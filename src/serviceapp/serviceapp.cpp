@@ -602,7 +602,7 @@ void eServiceApp::signalEventUpdatedInfo()
 	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
 	if (is_passthrough_fix_enabled)
 	{
-		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 500);
+		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
 		m_passthrough_fix_timer->stop();
 		m_passthrough_fix_timer->start(passthrough_delay, true);
 	}
