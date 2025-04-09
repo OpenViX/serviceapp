@@ -232,6 +232,12 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         config_list.append(getConfigListEntry("  " + _("Connection speed"),
             serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
         return config_list
+    
+    def serviceapp_passthrough_options(self, config_list):
+        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for drivers that not support it properly.")))
+        if config_serviceapp.passthrough_fix_enable.value:
+            config_list.append(getConfigListEntry(_("Passthrough fix delay"),
+                config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for passthrough fix.")))
 
     def player_options(self, player_type, service_type):
         config_list = []
@@ -257,6 +263,7 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         if config_serviceapp.servicemp3.replace.value:
             config_list.append(getConfigListEntry(_("Player"),
                 config_serviceapp.servicemp3.player, _("Select the player which will be used in serviceapp for Enigma2 playback.")))
+            self.serviceapp_passthrough_options(config_list)
             configlist_servicemp3 = [getConfigListEntry("", ConfigNothing())]
             configlist_servicemp3.append(getConfigListEntry(_("ServiceMp3 (%s)" % str(serviceapp_client.ID_SERVICEMP3)), ConfigNothing()))
             if config_serviceapp.servicemp3.player.value == "gstplayer":
@@ -265,10 +272,7 @@ class ServiceAppSettings(ConfigListScreen, Screen):
                 config_list += configlist_servicemp3 + self.player_options("exteplayer3", "servicemp3")
             else:
                 config_list += configlist_servicemp3
-        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for drivers that not support it properly.")))
-        if config_serviceapp.passthrough_fix_enable.value:
-            config_list.append(getConfigListEntry(_("Passthrough fix delay"),
-                config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for passthrough fix.")))
+        self.serviceapp_passthrough_options(config_list)
         config_list.append(getConfigListEntry("", ConfigNothing()))
         config_list.append(getConfigListEntry(_("ServiceGstPlayer (%s)" % str(serviceapp_client.ID_SERVICEGSTPLAYER)), ConfigNothing()))
         config_list += self.player_options("gstplayer", "servicegstplayer")
