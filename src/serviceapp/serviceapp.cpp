@@ -599,6 +599,13 @@ void eServiceApp::signalEventUpdatedInfo()
 {
 	eDebug("eServiceApp::signalEventUpdatedInfo");
     m_event(this, evUpdatedInfo);
+	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
+	if (is_passthrough_fix_enabled)
+	{
+		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 500);
+		m_passthrough_fix_timer->stop();
+		m_passthrough_fix_timer->start(passthrough_delay, true);
+	}
 }
 
 void eServiceApp::urlResolved(int success)
@@ -909,13 +916,6 @@ RESULT eServiceApp::selectTrack(unsigned int i)
 	if (player->audioSelectTrack(i) < 0)
 	{
 		return -1;
-	}
-	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
-	if (is_passthrough_fix_enabled)
-	{
-		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 500);
-		m_passthrough_fix_timer->stop();
-		m_passthrough_fix_timer->start(passthrough_delay, true);
 	}
 	return 0;
 }
