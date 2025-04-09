@@ -10,6 +10,7 @@
 #include <lib/base/init.h>
 #include <lib/base/eenv.h>
 #include <lib/base/nconfig.h>
+#include <lib/base/cfile.h>
 #ifdef HAVE_EPG
 #include <lib/dvb/epgcache.h>
 #endif
@@ -234,6 +235,8 @@ eServiceApp::eServiceApp(eServiceReference ref):
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceApp::pushSubtitles);
 	m_event_updated_info_timer = eTimer::create(eApp);
 	CONNECT(m_event_updated_info_timer->timeout, eServiceApp::signalEventUpdatedInfo);
+	m_passthrough_fix_timer = eTimer::create(eApp);
+	CONNECT(m_passthrough_fix_timer->timeout, eServiceApp::passthroughFix);
 
 #ifdef HAVE_EPG
 	m_nownext_timer = eTimer::create(eApp);
@@ -258,6 +261,25 @@ eServiceApp::~eServiceApp()
 };
 
 
+void eServiceApp::passthroughFix()
+{
+	eDebug("[ServiceApp] Setting 'passthrough' to force correct operation");
+	CFile::writeStr("/proc/stb/audio/ac3", "passthrough");
+	bool validposition = false;
+	pts_t ppos = 0;
+	if (getPlayPosition(ppos) >= 0)
+	{
+		validposition = true;
+		ppos -= 90000;
+		if (ppos < 0)
+			ppos = 0;
+	}
+	if (validposition)
+	{
+		/* flush */
+		seekTo(ppos);
+	}
+}
 
 void eServiceApp::fillSubservices()
 {
@@ -887,6 +909,13 @@ RESULT eServiceApp::selectTrack(unsigned int i)
 	if (player->audioSelectTrack(i) < 0)
 	{
 		return -1;
+	}
+	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
+	if (is_passthrough_fix_enabled)
+	{
+		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 500);
+		m_passthrough_fix_timer->stop();
+		m_passthrough_fix_timer->start(passthrough_delay, true);
 	}
 	return 0;
 }
