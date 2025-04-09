@@ -234,7 +234,7 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         return config_list
     
     def serviceapp_passthrough_options(self, config_list):
-        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for drivers that not support it properly.")))
+        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
         if config_serviceapp.passthrough_fix_enable.value:
             config_list.append(getConfigListEntry(_("Passthrough fix delay"),
                 config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for passthrough fix.")))
