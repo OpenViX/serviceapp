@@ -44,6 +44,9 @@ config_serviceapp.servicemp3 = ConfigSubsection()
 config_serviceapp.servicemp3.replace = ConfigBoolean(default=False, descriptions={0: _("original"), 1: _("serviceapp")})
 config_serviceapp.servicemp3.replace.value = serviceapp_client.isServiceMP3Replaced()
 config_serviceapp.servicemp3.player = ConfigSelection(default="gstplayer", choices=player_choices)
+config_serviceapp.passthrough_fix_enable = ConfigBoolean(default=False, descriptions={False: _("false"), True: _("true")})
+delay_choices = [(i, ngettext("%d millisecond", "%d milliseconds", i) % i) for i in list(range(0, 3000, 100))]  # noqa: F821
+config_serviceapp.passthrough_fix_delay = ConfigSelection(choices=delay_choices, default=500)
 
 config_serviceapp.options = ConfigSubDict()
 config_serviceapp.options["servicemp3"] = ConfigSubsection()
@@ -259,6 +262,10 @@ class ServiceAppSettings(ConfigListScreen, Screen):
                 config_list += configlist_servicemp3 + self.player_options("exteplayer3", "servicemp3")
             else:
                 config_list += configlist_servicemp3
+        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for drivers that not support it properly.")))
+        if config_serviceapp.passthrough_fix_enable.value:
+            config_list.append(getConfigListEntry(_("Passthrough fix delay"),
+                config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for passthrough fix.")))
         config_list.append(getConfigListEntry("", ConfigNothing()))
         config_list.append(getConfigListEntry(_("ServiceGstPlayer (%s)" % str(serviceapp_client.ID_SERVICEGSTPLAYER)), ConfigNothing()))
         config_list += self.player_options("gstplayer", "servicegstplayer")

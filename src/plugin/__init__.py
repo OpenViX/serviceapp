@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from os import environ
-from gettext import bindtextdomain, dgettext, gettext
+import gettext
 
 from Components.Language import language
 from Tools.Directories import resolveFilename, SCOPE_PLUGINS
@@ -9,14 +9,14 @@ from Tools.Directories import resolveFilename, SCOPE_PLUGINS
 
 def localeInit():
 	environ["LANGUAGE"] = language.getLanguage()[:2]
-	bindtextdomain("ServiceApp", resolveFilename(SCOPE_PLUGINS,
+	gettext.bindtextdomain("ServiceApp", resolveFilename(SCOPE_PLUGINS,
 		"SystemPlugins/ServiceApp/locale"))
 
 
 def _(txt):
-	t = dgettext("ServiceApp", txt)
+	t = gettext.dgettext("ServiceApp", txt)
 	if t == txt:
-		t = gettext(txt)
+		t = gettext.gettext(txt)
 	return t
 
 
