@@ -45,7 +45,7 @@ config_serviceapp.servicemp3.replace = ConfigBoolean(default=False, descriptions
 config_serviceapp.servicemp3.replace.value = serviceapp_client.isServiceMP3Replaced()
 config_serviceapp.servicemp3.player = ConfigSelection(default="gstplayer", choices=player_choices)
 config_serviceapp.passthrough_fix_enable = ConfigBoolean(default=False, descriptions={False: _("false"), True: _("true")})
-delay_choices = [(i, ngettext("%d millisecond", "%d milliseconds", i) % i) for i in list(range(0, 3000, 100))]  # noqa: F821
+delay_choices = [(i, ngettext("%d millisecond", "%d milliseconds", i) % i) for i in list(range(0, 3100, 100))]  # noqa: F821
 config_serviceapp.passthrough_fix_delay = ConfigSelection(choices=delay_choices, default=500)
 
 config_serviceapp.options = ConfigSubDict()
@@ -178,11 +178,14 @@ class ServiceAppSettings(ConfigListScreen, Screen):
                 lambda x: self.build_configlist(), initial_call=False)
         config_serviceapp.servicemp3.replace.addNotifier(
                 lambda x: self.build_configlist(), initial_call=False)
+        config_serviceapp.passthrough_fix_enable.addNotifier(
+                lambda x: self.build_configlist(), initial_call=False)
         self.build_configlist()
 
     def deinit_config(self):
         del config_serviceapp.servicemp3.player.notifiers[:]
         del config_serviceapp.servicemp3.replace.notifiers[:]
+        del config_serviceapp.passthrough_fix_enable.notifiers[:]
 
     def gstplayer_options(self, gstplayer_options_cfg):
         config_list = []
