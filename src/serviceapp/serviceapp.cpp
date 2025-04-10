@@ -23,6 +23,9 @@
 
 #include <Python.h>
 
+#include <string>
+#include <lib/base/estring.h>
+
 enum
 {
 	SUBSERVICES_INDEX_START = 1,
@@ -602,9 +605,13 @@ void eServiceApp::signalEventUpdatedInfo()
 	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
 	if (is_passthrough_fix_enabled)
 	{
-		int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
-		m_passthrough_fix_timer->stop();
-		m_passthrough_fix_timer->start(passthrough_delay, true);
+		std::string pass = CFile::read("/proc/stb/audio/ac3");
+		if (replace_all(replace_all(pass, "\r", ""), "\n", "") == "passthrough")
+		{
+			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
+			m_passthrough_fix_timer->stop();
+			m_passthrough_fix_timer->start(passthrough_delay, true);
+		}
 	}
 }
 
