@@ -11,6 +11,7 @@ from Components.Console import Console
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigBoolean, getConfigListEntry, ConfigSubDict, ConfigInteger, ConfigNothing
 from Components.Label import Label
 from Components.Sources.StaticText import StaticText
+from Components.SystemInfo import SystemInfo
 from Plugins.Plugin import PluginDescriptor
 from Screens.InfoBar import InfoBar, MoviePlayer
 from Screens.MessageBox import MessageBox
@@ -234,10 +235,11 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         return config_list
     
     def serviceapp_passthrough_options(self, config_list):
-        config_list.append(getConfigListEntry(_("Enable passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
-        if config_serviceapp.passthrough_fix_enable.value:
-            config_list.append(getConfigListEntry(_("Passthrough fix delay"),
-                config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for passthrough fix.")))
+        if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
+            config_list.append(getConfigListEntry(_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
+            if config_serviceapp.passthrough_fix_enable.value:
+                config_list.append(getConfigListEntry(_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
+
 
     def player_options(self, player_type, service_type):
         config_list = []
