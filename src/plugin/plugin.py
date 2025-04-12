@@ -19,7 +19,7 @@ from Screens.Screen import Screen
 from Tools.BoundFunction import boundFunction
 from enigma import eEnv, eServiceReference
 
-from . import _
+from . import _, ngettext
 from . import serviceapp_client
 
 
