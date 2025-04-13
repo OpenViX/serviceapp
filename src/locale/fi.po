@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ServiceApp / enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-11 22:01+0300\n"
-"PO-Revision-Date: 2025-04-12 12:52+0300\n"
+"POT-Creation-Date: 2025-04-13 07:00+0300\n"
+"PO-Revision-Date: 2025-04-13 10:51+0300\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: Orlandox\n"
 "Language: fi\n"
@@ -95,6 +95,9 @@ msgstr "LPCM-injektio"
 
 msgid "MP3 software decoding"
 msgstr "MP3:n ohjelmistodekoodaus"
+
+msgid "No"
+msgstr ""
 
 msgid "Ok"
 msgstr "Ok"
@@ -207,17 +210,11 @@ msgstr "kokeellinen"
 msgid "exteplayer3"
 msgstr "exteplayer3"
 
-msgid "false"
-msgstr "epätosi"
-
 msgid "gstplayer"
 msgstr "gstplayer"
 
 msgid "not installed"
 msgstr "ei asennettu"
-
-msgid "off"
-msgstr "epätosi"
 
 msgid "original"
 msgstr "alkuperäinen"
@@ -228,5 +225,6 @@ msgstr "serviceapp"
 msgid "setup player framework"
 msgstr "soittimen puitteiden asetus"
 
-msgid "true"
-msgstr "tosi"
+#, python-format
+msgid "version %s"
+msgstr "versio %s"
