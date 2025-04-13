@@ -246,14 +246,14 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         player_cfg = getattr(config_serviceapp, player_type)[service_type]
         serviceapp_cfg = config_serviceapp.options[service_type]
         if player_type == "exteplayer3":
-            config_list.append(getConfigListEntry("  " + _("ExtEplayer3"),
-                ConfigSelection([(EXTEPLAYER3_VERSION or "not installed", EXTEPLAYER3_VERSION and str(EXTEPLAYER3_VERSION) or _("not installed"))])))
+            config_list.append(getConfigListEntry("  " + _("ExtEplayer3"), 
+                ConfigSelection([EXTEPLAYER3_VERSION and (EXTEPLAYER3_VERSION, _("version %s") % str(EXTEPLAYER3_VERSION)) or (("not installed"), _("not installed"))])))
             if EXTEPLAYER3_VERSION:
                 config_list += self.exteplayer3_options(player_cfg)
                 config_list += self.serviceapp_options(serviceapp_cfg)
         if player_type == "gstplayer":
             config_list.append(getConfigListEntry("  " + _("GstPlayer"),
-                ConfigSelection([(GSTPLAYER_VERSION or "not installed", GSTPLAYER_VERSION and str(GSTPLAYER_VERSION) or _("not installed"))])))
+                ConfigSelection([GSTPLAYER_VERSION and (GSTPLAYER_VERSION, _("version %s") % str(GSTPLAYER_VERSION)) or (("not installed"), _("not installed"))])))
             if GSTPLAYER_VERSION:
                 config_list += self.gstplayer_options(player_cfg)
                 config_list += self.serviceapp_options(serviceapp_cfg)
