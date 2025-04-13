@@ -97,7 +97,7 @@ msgid "MP3 software decoding"
 msgstr "MP3:n ohjelmistodekoodaus"
 
 msgid "No"
-msgstr ""
+msgstr "Ei"
 
 msgid "Ok"
 msgstr "Ok"
