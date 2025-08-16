@@ -160,7 +160,7 @@ class ServiceAppSettings(ConfigListScreen, Screen):
         Screen.__init__(self, session)
         self.skinName = ["ServiceAppSettings", "Setup"]
         ConfigListScreen.__init__(self, [], session)
-        self.setup_title = _("ServiceApp")
+        self.title = _("ServiceApp")
         self.onLayoutFinish.append(self.init_configlist)
         self.onClose.append(self.deinit_config)
         self["key_red"] = StaticText(_("Cancel"))
