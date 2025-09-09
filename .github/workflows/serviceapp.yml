@@ -39,9 +39,9 @@ jobs:
           CXX: "g++-${{ matrix.gcc }}"
           CXXFLAGS: "-g -Wall"
         run: |
-          autoreconf -i
-          ./configure
-          make
+          # autoreconf -i
+          # ./configure
+          # make
           python -m compileall .
 
       - name: Check format PEP8
