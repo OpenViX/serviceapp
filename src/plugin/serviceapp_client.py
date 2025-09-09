@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from os import path, remove
+from os import remove
+from os.path import isfile
 
 from enigma import eEnv
 
