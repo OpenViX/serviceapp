@@ -266,7 +266,7 @@ class ServiceAppDetectPlayers(Screen):
 			[
 				("gstplayer_gst-1.0", _("Detecting gstreamer player ..."), self.detect_gstplayer),
 				("exteplayer3", _("Detecting exteplayer3 player ..."), self.detect_exteplayer3),
-			 ]
+			]
 		)
 		self.onLayoutFinish.append(self.detect_next_player)
 
@@ -353,7 +353,7 @@ def play_gstplayer(session, service, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-		PluginDescriptor(name=_("ServiceApp"), description=_("setup player framework"), 
+		PluginDescriptor(name=_("ServiceApp"), description=_("setup player framework"),
 			where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=menu),
 		PluginDescriptor(name=_("ServiceApp"), description=_("Play with ServiceExtEplayer3"),
 			where=PluginDescriptor.WHERE_MOVIELIST, needsRestart=False, fnc=play_exteplayer3),
