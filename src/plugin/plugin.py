@@ -134,16 +134,17 @@ def init_serviceapp_settings():
 			rtmp_proto_val = 1
 		else:
 			rtmp_proto_val = 0
-		serviceapp_client.setExtEplayer3Settings(setting_id,
-				int(player_cfg.aac_swdecoding.value),
-				player_cfg.dts_swdecoding.value,
-				player_cfg.wma_swdecoding.value,
-				player_cfg.lpcm_injecion.value,
-				player_cfg.downmix.value,
-				player_cfg.ac3_swdecoding.value,
-				player_cfg.eac3_swdecoding.value,
-				player_cfg.mp3_swdecoding.value,
-				rtmp_proto_val)
+		serviceapp_client.setExtEplayer3Settings(
+			setting_id,
+			int(player_cfg.aac_swdecoding.value),
+			player_cfg.dts_swdecoding.value,
+			player_cfg.wma_swdecoding.value,
+			player_cfg.lpcm_injecion.value,
+			player_cfg.downmix.value,
+			player_cfg.ac3_swdecoding.value,
+			player_cfg.eac3_swdecoding.value,
+			player_cfg.mp3_swdecoding.value,
+			rtmp_proto_val)
 
 	if config_serviceapp.servicemp3.player.value == "gstplayer":
 		serviceapp_client.setServiceMP3GstPlayer()
@@ -183,7 +184,7 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("HLS Explorer"), serviceapp_options_cfg.hls_explorer, _("Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices.")))
 		config_list.append((self.indent + _("Auto select stream"), serviceapp_options_cfg.autoselect_stream, _("Turn on auto-selection of streams according to set Connection speed.")))
 		config_list.append((self.indent + _("Connection speed"), serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
-	
+
 	def serviceapp_passthrough_options(self, config_list):
 		if SystemInfo["Vu_EAC3_fix"]:
 			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
@@ -242,8 +243,7 @@ class ServiceAppPlayer(MoviePlayer):
 
 	def handleLeave(self, how):
 		if how == "ask":
-			self.session.openWithCallback(self.leavePlayerConfirmed,
-				    MessageBox, _("Stop playing this movie?"))
+			self.session.openWithCallback(self.leavePlayerConfirmed, MessageBox, _("Stop playing this movie?"))
 		else:
 			self.close()
 
@@ -263,13 +263,11 @@ class ServiceAppDetectPlayers(Screen):
 		Screen.__init__(self, session)
 		self["text"] = Label()
 		self.players_iter = iter(
-				[("gstplayer_gst-1.0",
-				    _("Detecting gstreamer player ..."),
-				    self.detect_gstplayer),
-				 ("exteplayer3",
-				     _("Detecting exteplayer3 player ..."),
-				     self.detect_exteplayer3)
-				 ])
+			[
+				("gstplayer_gst-1.0", _("Detecting gstreamer player ..."), self.detect_gstplayer),
+				("exteplayer3", _("Detecting exteplayer3 player ..."), self.detect_exteplayer3),
+			 ]
+		)
 		self.onLayoutFinish.append(self.detect_next_player)
 
 	def detect_next_player(self):
@@ -291,7 +289,7 @@ class ServiceAppDetectPlayers(Screen):
 			try:
 				jsondata = json.loads(line)
 				break
-			except ValueError as e:
+			except ValueError:
 				pass
 		return jsondata
 
@@ -355,10 +353,10 @@ def play_gstplayer(session, service, **kwargs):
 
 def Plugins(**kwargs):
 	return [
-			PluginDescriptor(name=_("ServiceApp"), description=_("setup player framework"),
-				where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=menu),
-			PluginDescriptor(name=_("ServiceApp"), description=_("Play with ServiceExtEplayer3"),
-				where=PluginDescriptor.WHERE_MOVIELIST, needsRestart=False, fnc=play_exteplayer3),
-			PluginDescriptor(name=_("ServiceApp"), description=_("Play with ServiceGstPlayer"),
-				where=PluginDescriptor.WHERE_MOVIELIST, needsRestart=False, fnc=play_gstplayer)
-			]
+		PluginDescriptor(name=_("ServiceApp"), description=_("setup player framework"), 
+			where=PluginDescriptor.WHERE_MENU, needsRestart=False, fnc=menu),
+		PluginDescriptor(name=_("ServiceApp"), description=_("Play with ServiceExtEplayer3"),
+			where=PluginDescriptor.WHERE_MOVIELIST, needsRestart=False, fnc=play_exteplayer3),
+		PluginDescriptor(name=_("ServiceApp"), description=_("Play with ServiceGstPlayer"),
+			where=PluginDescriptor.WHERE_MOVIELIST, needsRestart=False, fnc=play_gstplayer)
+	]

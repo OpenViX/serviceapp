@@ -22,11 +22,13 @@ def _(txt):
 		t = gettext.gettext(txt)
 	return t
 
+
 def ngettext(singular, plural, n):
 	trans = gettext.dngettext(PluginLanguageDomain, singular, plural, n)
 	if trans in (singular, plural):
 		trans = gettext.ngettext(singular, plural, n)
 	return trans
+
 
 localeInit()
 language.addCallback(localeInit)
