@@ -107,20 +107,6 @@ int eConsoleContainer::execute(eMainloop *context, const char *cmdline, const ch
 	eDebug("[ServiceApp][eConsoleContainer] Starting %s", cmdline);
 	pid=-1;
 	killstate=0;
-	int tmp_fd = -1;
-	tmp_fd = ::open("/dev/console", O_RDONLY | O_CLOEXEC);
-	eDebug("[ServiceApp][eConsoleContainer]  Opened tmp_fd: %d", tmp_fd);
-	if (tmp_fd == 0)
-	{
-		::close(tmp_fd);
-		tmp_fd = -1;
-		fd0lock = ::open("/dev/console", O_RDONLY | O_CLOEXEC);
-		eDebug("[ServiceApp][eConsoleContainer] opening null fd returned: %d", fd0lock);
-	}
-	if (tmp_fd != -1)
-	{
-		::close(tmp_fd);
-	}
 	/* get one read, one write and the err pipe to the prog..  */
 	pid = bidirpipe(fd, cmdline, argv, m_cwd.empty() ? 0 : m_cwd.c_str());
 
