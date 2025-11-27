@@ -25,7 +25,7 @@ else
     echo "-------------------------------------------"
 fi
 
-AX_CXX_COMPILE_STDCXX([17], [ext], [mandatory])
+AX_CXX_COMPILE_STDCXX([20], [ext], [mandatory])
 
 AC_DEFINE([DEBUG])
 
