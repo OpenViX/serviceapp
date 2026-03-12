@@ -179,12 +179,8 @@ std::vector<std::string> ExtEplayer3::buildCommand()
 		}
 		if (i->second.getType() == "int" || i->second.getType() == "string")
 		{
-			std::stringstream ss;
-			ss << i->second.getAppArg();
-			ss << " ";
-			ss << i->second.getValue();
-			args.push_back(ss.str());
-		}
+            args.push_back(i->second.getAppArg()); //add arg name to list of args
+			args.push_back(i->second.getValue());  //add value to list of args		}
 	}
 	return args;
 }
