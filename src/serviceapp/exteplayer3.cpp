@@ -25,6 +25,7 @@ const std::string  EXT3_PLAYBACK_MPEGTS_PROGRAM    = "mpegts_program_id";
 const std::string  EXT3_RTMP_PROTOCOL              = "rtmpproto";
 const std::string  EXT3_NICE_VALUE                 = "nice";
 const std::string  EXT3_FFMPEG_SETTING_STRING      = "ffmpeg_option";
+const std::string  EXT3_ARGS_LIST                  = "args"; // cmdline like list of exteplayer3 arguments in a form "-arg1=value1-arg2=value2"
 
 SettingMap &ExtEplayer3Options::GetSettingMap()
 {
@@ -55,6 +56,7 @@ ExtEplayer3Options::ExtEplayer3Options()
 	settingMap[EXT3_PLAYBACK_DASH_VIDEO_ID]     = SettingEntry ("-0", "int");
 	settingMap[EXT3_PLAYBACK_DASH_AUDIO_ID]     = SettingEntry ("-1", "int");
 	settingMap[EXT3_FFMPEG_SETTING_STRING]      = SettingEntry ("-f", "string");
+	settingMap[EXT3_ARGS_LIST]                  = SettingEntry ("al", "argslist");
 }
 
 int ExtEplayer3Options::update(const std::string &key, const std::string &val)
@@ -108,6 +110,10 @@ int ExtEplayer3Options::update(const std::string &key, const std::string &val)
 		else if (entry.getType() == "string")
 		{
 			entry.setValue(val);
+		}
+		else if (entry.getType() == "argslist")
+		{
+                     entry.setValue(val);
 		}
 	}
 	else
@@ -180,7 +186,40 @@ std::vector<std::string> ExtEplayer3::buildCommand()
 		if (i->second.getType() == "int" || i->second.getType() == "string")
 		{
             args.push_back(i->second.getAppArg()); //add arg name to list of args
-			args.push_back(i->second.getValue());  //add value to list of args		}
+			args.push_back(i->second.getValue());  //add value to list of args
+		}
+		if (i->second.getType() == "argslist")
+                {
+                        std::stringstream ss(i->second.getValue());
+                        std::string item;
+
+                        while (std::getline(ss, item, '-'))
+                        {
+                                if (!item.empty())
+                                {
+                                        if (item.find("exteplayer3") != std::string::npos)
+                                        {
+                                                args[0] = item;
+                                        }
+                                        else
+                                        {
+                                                // split arg=value
+                                                size_t eq = item.find('=');
+                                                if (eq != std::string::npos)
+                                                {
+                                                        std::string key = item.substr(0, eq);
+                                                        std::string value = item.substr(eq + 1);
+                                                        args.push_back("-" + key);
+                                                        args.push_back(value);
+                                                }
+                                                else
+                                                {
+                                                        args.push_back(item);
+                                                }
+                                        }
+                                }
+                        }
+                }
 	}
 	return args;
 }
