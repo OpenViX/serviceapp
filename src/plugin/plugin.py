@@ -173,7 +173,7 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("EAC3 software decoding"), exteplayer3_options_cfg.eac3_swdecoding, _("Turn on EAC3 software decoding.")))
 		config_list.append((self.indent + _("AC3 software decoding"), exteplayer3_options_cfg.ac3_swdecoding, _("Turn on AC3 software decoding.")))
 		config_list.append((self.indent + _("DTS software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on DTS software decoding.")))
-		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on MP3 software decoding.")))
+		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.mp3_swdecoding, _("Turn on MP3 software decoding.")))
 		config_list.append((self.indent + _("WMA software decoding"), exteplayer3_options_cfg.wma_swdecoding, _("Turn on WMA1, WMA2, WMA/PRO software decoding.")))
 		config_list.append((self.indent + _("Stereo downmix"), exteplayer3_options_cfg.downmix, _("Turn on downmix to stereo, when software decoding is in use")))
 		config_list.append((self.indent + _("LPCM injection"), exteplayer3_options_cfg.lpcm_injecion, _("Software decoder use LPCM for injection (otherwise wav PCM will be used)")))
@@ -211,17 +211,17 @@ class ServiceAppSettings(Setup):
 			config_list.append((_("Player"), config_serviceapp.servicemp3.player, _("Select the player which will be used in serviceapp for Enigma2 playback.")))
 			self.serviceapp_passthrough_options(config_list)
 			config_list.append(self.spacer)
-			config_list.append((_("ServiceMp3 (%s)" % str(serviceapp_client.ID_SERVICEMP3)),))
+			config_list.append((_("ServiceMp3 (%s)") % str(serviceapp_client.ID_SERVICEMP3),))
 			if config_serviceapp.servicemp3.player.value == "gstplayer":
 				self.player_options("gstplayer", "servicemp3", config_list)
 			elif config_serviceapp.servicemp3.player.value == "exteplayer3":
 				self.player_options("exteplayer3", "servicemp3", config_list)
 		self.serviceapp_passthrough_options(config_list)
 		config_list.append(self.spacer)
-		config_list.append((_("ServiceGstPlayer (%s)" % str(serviceapp_client.ID_SERVICEGSTPLAYER)),))
+		config_list.append((_("ServiceGstPlayer (%s)") % str(serviceapp_client.ID_SERVICEGSTPLAYER),))
 		self.player_options("gstplayer", "servicegstplayer", config_list)
 		config_list.append(self.spacer)
-		config_list.append((_("ServiceExtEplayer3 (%s)" % str(serviceapp_client.ID_SERVICEEXTEPLAYER3)),))
+		config_list.append((_("ServiceExtEplayer3 (%s)") % str(serviceapp_client.ID_SERVICEEXTEPLAYER3),))
 		self.player_options("exteplayer3", "serviceexteplayer3", config_list)
 		self["config"].list = config_list
 
