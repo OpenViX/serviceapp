@@ -173,7 +173,7 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("EAC3 software decoding"), exteplayer3_options_cfg.eac3_swdecoding, _("Turn on EAC3 software decoding.")))
 		config_list.append((self.indent + _("AC3 software decoding"), exteplayer3_options_cfg.ac3_swdecoding, _("Turn on AC3 software decoding.")))
 		config_list.append((self.indent + _("DTS software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on DTS software decoding.")))
-		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on MP3 software decoding.")))
+		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.mp3_swdecoding, _("Turn on MP3 software decoding.")))
 		config_list.append((self.indent + _("WMA software decoding"), exteplayer3_options_cfg.wma_swdecoding, _("Turn on WMA1, WMA2, WMA/PRO software decoding.")))
 		config_list.append((self.indent + _("Stereo downmix"), exteplayer3_options_cfg.downmix, _("Turn on downmix to stereo, when software decoding is in use")))
 		config_list.append((self.indent + _("LPCM injection"), exteplayer3_options_cfg.lpcm_injecion, _("Software decoder use LPCM for injection (otherwise wav PCM will be used)")))
