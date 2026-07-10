@@ -71,6 +71,7 @@ class eServiceApp: public sigc::trackable,
 	pts_t m_prev_subtitle_fps;
 	ePtr<eTimer> m_event_updated_info_timer;
 	ePtr<eTimer> m_passthrough_fix_timer;
+	ePtr<eTimer> m_passthrough_fix2_timer;
 
 	pts_t m_prev_decoder_time;
 	int m_decoder_time_valid_state;
@@ -83,8 +84,10 @@ class eServiceApp: public sigc::trackable,
 	void pullSubtitles();
 	void pushSubtitles();
 	void signalEventUpdatedInfo();
+	void signalEventUpdatedInfo2();
 	void urlResolved(int success);
 	void passthroughFix();
+	void passthroughFix2();
 
 #ifdef HAVE_EPG
 	ePtr<eTimer> m_nownext_timer;

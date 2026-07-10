@@ -241,6 +241,9 @@ eServiceApp::eServiceApp(eServiceReference ref):
 	CONNECT(m_event_updated_info_timer->timeout, eServiceApp::signalEventUpdatedInfo);
 	m_passthrough_fix_timer = eTimer::create(eApp);
 	CONNECT(m_passthrough_fix_timer->timeout, eServiceApp::passthroughFix);
+	CONNECT(m_event_updated_info_timer->timeout, eServiceApp::signalEventUpdatedInfo2);
+	m_passthrough_fix2_timer = eTimer::create(eApp);
+	CONNECT(m_passthrough_fix2_timer->timeout, eServiceApp::passthroughFix2);
 
 #ifdef HAVE_EPG
 	m_nownext_timer = eTimer::create(eApp);
@@ -267,14 +270,34 @@ eServiceApp::~eServiceApp()
 
 void eServiceApp::passthroughFix()
 {
-	eDebug("[ServiceApp] Setting 'passthrough' to force correct operation");
+	eDebug("[ServiceApp] Setting 'ac3+ passthrough' to force correct operation");
 	CFile::writeStr("/proc/stb/audio/ac3", "passthrough");
 	bool validposition = false;
 	pts_t ppos = 0;
 	if (getPlayPosition(ppos) >= 0)
 	{
 		validposition = true;
-		ppos -= 90000;
+		ppos -= 9000; /* seek back ~100ms instead of 1s for faster audio switch */
+		if (ppos < 0)
+			ppos = 0;
+	}
+	if (validposition)
+	{
+		/* flush */
+		seekTo(ppos);
+	}
+}
+
+void eServiceApp::passthroughFix2()
+{
+	eDebug("[ServiceApp] Setting 'he-aac passthrough' to force correct operation");
+	CFile::writeStr("/proc/stb/audio/aac", "passthrough");
+	bool validposition = false;
+	pts_t ppos = 0;
+	if (getPlayPosition(ppos) >= 0)
+	{
+		validposition = true;
+		ppos -= 9000; /* seek back ~100ms instead of 1s for faster audio switch */
 		if (ppos < 0)
 			ppos = 0;
 	}
@@ -612,6 +635,23 @@ void eServiceApp::signalEventUpdatedInfo()
 			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
 			m_passthrough_fix_timer->stop();
 			m_passthrough_fix_timer->start(passthrough_delay, true);
+		}
+	}
+}
+
+void eServiceApp::signalEventUpdatedInfo2()
+{
+	eDebug("eServiceApp::signalEventUpdatedInfo2");
+    m_event(this, evUpdatedInfo);
+	bool is_passthrough_fix2_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix2_enable", false);
+	if (is_passthrough_fix2_enabled)
+	{
+		std::string pass = CFile::read("/proc/stb/audio/aac");
+		if (replace_all(replace_all(pass, "\r", ""), "\n", "") == "passthrough")
+		{
+			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix2_delay", 0);
+			m_passthrough_fix2_timer->stop();
+			m_passthrough_fix2_timer->start(passthrough_delay, true);
 		}
 	}
 }
