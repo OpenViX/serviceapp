@@ -501,6 +501,10 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 			eDebug("PlayerBackend::gotMessage - videoProgressiveChanged");
 			gotPlayerMessage(PlayerMessage::videoProgressiveChanged);
 			break;
+		case Message::videoHdrChanged:
+			eDebug("PlayerBackend::gotMessage - videoHdrChanged");
+			gotPlayerMessage(PlayerMessage::videoHdrChanged);
+			break;
 		case Message::audioSelect:
 			eDebug("PlayerBackend::gotMessage - audioSelect");
 			break;
@@ -677,6 +681,8 @@ void PlayerBackend::recvVideoTrackCurrent(int status, videoStream& stream)
 		pCurrentVideo = new videoStream(stream);
 		if (stream.progressive >= 0 && prev.progressive != stream.progressive)
 			mMessageMain.send(Message(Message::videoProgressiveChanged));
+		if (stream.hdr_type >= 0 && prev.hdr_type != stream.hdr_type)
+			mMessageMain.send(Message(Message::videoHdrChanged));
 		if (stream.framerate > 0 && prev.framerate != stream.framerate)
 			mMessageMain.send(Message(Message::videoFramerateChanged));
 		if ((stream.width > 0 && prev.width != stream.width) || (stream.height > 0 && prev.height != stream.height))

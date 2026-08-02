@@ -52,7 +52,7 @@ class eServiceApp: public sigc::trackable,
 
 	bool m_event_started;
 	bool m_paused;
-	int m_framerate, m_width, m_height, m_progressive;
+	int m_framerate, m_width, m_height, m_progressive, m_hdr_type;
 
 	typedef std::map<uint32_t, subtitleMessage> subtitle_pages_map;
 	typedef std::pair<uint32_t, subtitleMessage> subtitle_pages_map_pair;

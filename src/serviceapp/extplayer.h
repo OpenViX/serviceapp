@@ -61,6 +61,7 @@ struct PlayerMessage
 		videoSizeChanged,
 		videoProgressiveChanged,
 		videoFramerateChanged,
+		videoHdrChanged,
 		subtitleAvailable,
 	};
 };
@@ -84,7 +85,8 @@ struct videoStream
 	int height;
 	int framerate;
 	int progressive;
-	videoStream(): id(-1), width(-1), height(-1), framerate(-1), progressive(-1){};
+	int hdr_type;
+	videoStream(): id(-1), width(-1), height(-1), framerate(-1), progressive(-1), hdr_type(0){};
 };
 
 
@@ -210,6 +212,7 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 			videoSizeChanged,
 			videoFramerateChanged,
 			videoProgressiveChanged,
+			videoHdrChanged,
 			subtitleAvailable,
 			error,
 		};

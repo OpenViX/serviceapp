@@ -222,6 +222,7 @@ eServiceApp::eServiceApp(eServiceReference ref):
 	m_width(-1),
 	m_height(-1),
 	m_progressive(-1),
+	m_hdr_type(0),
 	m_subtitle_pages(0),
 	m_selected_subtitle_track(0),
 	m_prev_subtitle_message(0),
@@ -693,6 +694,17 @@ void eServiceApp::gotExtPlayerMessage(int message)
 				m_progressive = v.progressive;
 			}
 			m_event(this, evVideoProgressiveChanged);
+			break;
+		}
+		case PlayerMessage::videoHdrChanged:
+		{
+			eDebug("eServiceApp::gotExtPlayerMessage - videoHdrChanged");
+			videoStream v;
+			if (!player->videoGetTrackInfo(v,0))
+			{
+				m_hdr_type = v.hdr_type;
+			}
+			m_event(this, evUpdatedInfo);
 			break;
 		}
 		case PlayerMessage::subtitleAvailable:
@@ -1208,6 +1220,7 @@ int eServiceApp::getInfo(int w)
 	case sVideoWidth: return m_width;
 	case sFrameRate: return m_framerate;
 	case sProgressive: return m_progressive;
+	case sHDRType: return m_hdr_type;
 	case sAspect:
 	{
 		if (m_height <= 0 || m_width <= 0)
