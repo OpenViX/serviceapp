@@ -989,6 +989,8 @@ RESULT eServiceApp::getTrackInfo(iAudioTrackInfo& trackInfo, unsigned int n)
 	}
 	trackInfo.m_description = track.description;
 	trackInfo.m_language = track.language_code;
+	if (track.channels > 0)
+		trackInfo.m_channels = track.channels;
 	return 0;
 }
 
@@ -1637,9 +1639,11 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 	bool wmaSwDecoding;
 	bool downmix;
 	bool lpcmInjection;
+	bool dtsTranscoding;
+	bool truehdTranscoding;
 	int rtmpProtocol;
 
-	if (!PyArg_ParseTuple(args, "ibbbbbbbbi",
+	if (!PyArg_ParseTuple(args, "ibbbbbbbbbbi",
 				&settingId,
 				&aacSwDecoding,
 				&dtsSwDecoding,
@@ -1649,6 +1653,8 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 				&ac3SwDecoding,
 				&eac3SwDecoding,
 				&mp3SwDecoding,
+				&dtsTranscoding,
+				&truehdTranscoding,
 				&rtmpProtocol))
 		return NULL;
 
@@ -1678,6 +1684,8 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 		options->GetSettingMap()[EXT3_SW_DECODING_AC3].setValue(ac3SwDecoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_EAC3].setValue(eac3SwDecoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_DTS].setValue(dtsSwDecoding);
+		options->GetSettingMap()[EXT3_TRANSCODE_DTS_AC3].setValue(dtsTranscoding);
+		options->GetSettingMap()[EXT3_TRANSCODE_TRUEHD_AC3].setValue(truehdTranscoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_WMA].setValue(wmaSwDecoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_MP3].setValue(mp3SwDecoding);
 		options->GetSettingMap()[EXT3_LPCM_INJECTION].setValue(lpcmInjection);

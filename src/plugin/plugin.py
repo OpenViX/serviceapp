@@ -80,6 +80,8 @@ for key in list(config_serviceapp.exteplayer3.keys()):
 	config_serviceapp.exteplayer3[key].eac3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].ac3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].dts_swdecoding = ConfigYesNo(default=False)
+	config_serviceapp.exteplayer3[key].dts_transcoding = ConfigSelection(default="passthrough", choices=[("passthrough", _("Passthrough")), ("ac3", _("Dolby Digital 5.1"))])
+	config_serviceapp.exteplayer3[key].truehd_transcoding = ConfigSelection(default="passthrough", choices=[("passthrough", _("Passthrough")), ("ac3", _("Dolby Digital 5.1"))])
 	config_serviceapp.exteplayer3[key].mp3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].wma_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].lpcm_injecion = ConfigYesNo(default=False)
@@ -149,7 +151,9 @@ def init_serviceapp_settings():
 			player_cfg.ac3_swdecoding.value,
 			player_cfg.eac3_swdecoding.value,
 			player_cfg.mp3_swdecoding.value,
-			rtmp_proto_val)
+			rtmp_proto_val,
+			player_cfg.dts_transcoding.value == "ac3",
+			player_cfg.truehd_transcoding.value == "ac3")
 
 	if config_serviceapp.servicemp3.player.value == "gstplayer":
 		serviceapp_client.setServiceMP3GstPlayer()
@@ -178,6 +182,8 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("EAC3 software decoding"), exteplayer3_options_cfg.eac3_swdecoding, _("Turn on EAC3 software decoding.")))
 		config_list.append((self.indent + _("AC3 software decoding"), exteplayer3_options_cfg.ac3_swdecoding, _("Turn on AC3 software decoding.")))
 		config_list.append((self.indent + _("DTS software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on DTS software decoding.")))
+		config_list.append((self.indent + _("DTS / DTS-HD Transcoding"), exteplayer3_options_cfg.dts_transcoding, _("Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital.")))
+		config_list.append((self.indent + _("Dolby TrueHD Transcoding"), exteplayer3_options_cfg.truehd_transcoding, _("Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital.")))
 		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.mp3_swdecoding, _("Turn on MP3 software decoding.")))
 		config_list.append((self.indent + _("WMA software decoding"), exteplayer3_options_cfg.wma_swdecoding, _("Turn on WMA1, WMA2, WMA/PRO software decoding.")))
 		config_list.append((self.indent + _("Stereo downmix"), exteplayer3_options_cfg.downmix, _("Turn on downmix to stereo, when software decoding is in use")))

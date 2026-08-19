@@ -7,6 +7,8 @@ const std::string  EXT3_SW_DECODING_AAC            = "aac_swdec";
 const std::string  EXT3_SW_DECODING_AC3            = "ac3_swdec";
 const std::string  EXT3_SW_DECODING_EAC3           = "eac3_swdec";
 const std::string  EXT3_SW_DECODING_DTS            = "dts_swdec";
+const std::string  EXT3_TRANSCODE_DTS_AC3           = "dts_ac3_transcode";
+const std::string  EXT3_TRANSCODE_TRUEHD_AC3        = "truehd_ac3_transcode";
 const std::string  EXT3_SW_DECODING_MP3            = "mp3_swdec";
 const std::string  EXT3_SW_DECODING_WMA            = "wma_swdec";
 const std::string  EXT3_DOWNMIX                    = "downmix";
@@ -38,6 +40,8 @@ ExtEplayer3Options::ExtEplayer3Options()
 	settingMap[EXT3_SW_DECODING_EAC3]           = SettingEntry ("-e", "bool");
 	settingMap[EXT3_SW_DECODING_AC3]            = SettingEntry ("-3", "bool");
 	settingMap[EXT3_SW_DECODING_DTS]            = SettingEntry ("-d", "bool");
+	settingMap[EXT3_TRANSCODE_DTS_AC3]           = SettingEntry ("-D", "bool");
+	settingMap[EXT3_TRANSCODE_TRUEHD_AC3]        = SettingEntry ("-X", "bool");
 	settingMap[EXT3_SW_DECODING_MP3]            = SettingEntry ("-m", "bool");
 	settingMap[EXT3_SW_DECODING_WMA]            = SettingEntry ("-w", "bool");
 	settingMap[EXT3_LPCM_INJECTION]             = SettingEntry ("-l", "bool");
@@ -325,6 +329,8 @@ void ExtEplayer3::handleJsonOutput(cJSON *json)
 		a.id = cJSON_GetObjectItem(value, "id")->valueint;
 		a.description = cJSON_GetObjectItem(value, "e")->valuestring;
 		a.language_code = cJSON_GetObjectItem(value, "n")->valuestring;
+		cJSON *channels = cJSON_GetObjectItem(value, "c");
+		a.channels = channels ? channels->valueint : 0;
 		recvAudioTrackCurrent(0, a);
 	}
 	else if (!strcmp(key, "a_l"))
@@ -337,6 +343,8 @@ void ExtEplayer3::handleJsonOutput(cJSON *json)
 			a.id = cJSON_GetObjectItem(subitem, "id")->valueint;
 			a.description = cJSON_GetObjectItem(subitem, "e")->valuestring;
 			a.language_code = cJSON_GetObjectItem(subitem, "n")->valuestring;
+			cJSON *channels = cJSON_GetObjectItem(subitem, "c");
+			a.channels = channels ? channels->valueint : 0;
 			streams.push_back(a);
 		}
 		recvAudioTracksList(0, streams);

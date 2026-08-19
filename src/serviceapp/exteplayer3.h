@@ -9,6 +9,8 @@ extern const std::string EXT3_SW_DECODING_AAC;
 extern const std::string EXT3_SW_DECODING_AC3;
 extern const std::string EXT3_SW_DECODING_EAC3;
 extern const std::string EXT3_SW_DECODING_DTS;
+extern const std::string EXT3_TRANSCODE_DTS_AC3;
+extern const std::string EXT3_TRANSCODE_TRUEHD_AC3;
 extern const std::string EXT3_SW_DECODING_MP3;
 extern const std::string EXT3_SW_DECODING_WMA;
 extern const std::string EXT3_DOWNMIX;

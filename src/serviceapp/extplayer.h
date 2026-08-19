@@ -70,9 +70,10 @@ struct PlayerMessage
 struct audioStream
 {
 	int id;
+	int channels;
 	std::string language_code; /* iso-639, if available. */
 	std::string description; /* clear text codec description */
-	audioStream(): id(-1){};
+	audioStream(): id(-1), channels(0){};
 };
 
 
