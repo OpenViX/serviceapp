@@ -972,9 +972,23 @@ int eServiceApp::getNumberOfTracks()
 RESULT eServiceApp::selectTrack(unsigned int i)
 {
 	eDebug("eServiceApp::selectTrack = %d", i);
+	audioStream track;
+	bool eac3_passthrough = player->audioGetTrackInfo(track, i) == 0 &&
+		(track.description == "Dolby Atmos" || track.description == "Dolby Digital +" ||
+		 track.description == "A_EAC3" || track.description == "AC3+");
 	if (player->audioSelectTrack(i) < 0)
 	{
 		return -1;
+	}
+	if (eac3_passthrough && eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false))
+	{
+		std::string pass = CFile::read("/proc/stb/audio/ac3");
+		if (replace_all(replace_all(pass, "\r", ""), "\n", "") == "passthrough")
+		{
+			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
+			m_passthrough_fix_timer->stop();
+			m_passthrough_fix_timer->start(passthrough_delay, true);
+		}
 	}
 	return 0;
 }
