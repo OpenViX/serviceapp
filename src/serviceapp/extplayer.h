@@ -63,6 +63,7 @@ struct PlayerMessage
 		videoFramerateChanged,
 		videoHdrChanged,
 		subtitleAvailable,
+		audioChannelsChanged,
 	};
 };
 
@@ -204,6 +205,7 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 			tAudioSelect,
 			audioList,
 			tAudioList,
+			audioChannelsChanged,
 			subtitleSelect,
 			tSubtitleSelect,
 			subtitleList,
@@ -241,6 +243,7 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 	eFixedMessagePump<Message> mMessageMain, mMessageThread;
 	ePtr<eTimer> mTimer;
 	unsigned int mTimerDelay;
+	unsigned int mAudioChannelsCheckCounter;
 
 	eSingleLock mSubLock;
 
@@ -295,6 +298,7 @@ public:
 		mMessageMain(eApp, 1),
 		mMessageThread(this, 1),
 		mTimerDelay(100), // updated play position timer
+		mAudioChannelsCheckCounter(0),
 		mWaitForUpdate(false),
 		mWaitForStop(false)
 

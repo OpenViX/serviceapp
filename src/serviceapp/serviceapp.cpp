@@ -698,6 +698,10 @@ void eServiceApp::gotExtPlayerMessage(int message)
 			eDebug("eServiceApp::gotExtPlayerMessage - resume");
 			m_paused = false;
 			break;
+		case PlayerMessage::audioChannelsChanged:
+			eDebug("eServiceApp::gotExtPlayerMessage - audioChannelsChanged");
+			m_event(this, evUpdatedInfo);
+			break;
 		case PlayerMessage::error:
 			eDebug("eServiceApp::gotExtPlayerMessage - error");
 			m_event(this, evUser + 12);

@@ -246,7 +246,9 @@ int ExtEplayer3::sendAudioSelectTrack(int trackId)
 {
 	std::stringstream sstm;
 	sstm << "a" << trackId << std::endl;
-	return processSend(sstm.str());
+	int ret = processSend(sstm.str());
+	eDebug("[DIAG] ExtEplayer3::sendAudioSelectTrack - trackId=%d ret=%d", trackId, ret);
+	return ret;
 }
 
 int ExtEplayer3::sendUpdateSubtitleTracksList(){ return processSend(std::string("sl\n"));}
@@ -275,6 +277,7 @@ int ExtEplayer3::sendSeekRelative(int seconds)
 
 void ExtEplayer3::handleProcessStopped(int retval)
 {
+	eDebug("[DIAG] ExtEplayer3::handleProcessStopped ENTRY - actual retval=%d (recvStopped always called with 0)", retval);
 	recvStopped(0);
 }
 

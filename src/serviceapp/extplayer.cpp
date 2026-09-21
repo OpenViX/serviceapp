@@ -88,11 +88,13 @@ void PlayerApp::stdoutAvail(const char *data)
 
 void PlayerApp::appClosed(int retval)
 {
+	eDebug("[DIAG] PlayerApp::appClosed ENTRY - retval=%d", retval);
 	handleProcessStopped(retval);
 }
 
 int PlayerApp::processStart(eMainloop *context)
 {
+	eDebug("[DIAG] PlayerApp::processStart ENTRY");
 	console = new eConsoleContainer();
 	CONNECT(console->appClosed, PlayerApp::appClosed);
 	CONNECT(console->stdoutAvail, PlayerApp::stdoutAvail);
@@ -129,14 +131,19 @@ int PlayerApp::processSend(const std::string& data)
 	if (console && console->running())
 	{
 		eLog(5, "sending command \"%s\" ", data.c_str());
+		eDebug("[DIAG] PlayerApp::processSend - sending \"%s\" (running=1)", data.c_str());
 		console->write(data.c_str(), data.length());
 		return 0;
 	}
+	eDebug("[DIAG] PlayerApp::processSend - REFUSED \"%s\" (console_set=%d running=%d)",
+		data.c_str(), (int)(console != NULL), console ? console->running() : -1);
 	return -1;
 }
 
 void PlayerApp::processKill()
 {
+	eDebug("[DIAG] PlayerApp::processKill ENTRY (console_set=%d running=%d)",
+		(int)(console != NULL), console ? console->running() : -1);
 	if (console && console->running())
 	{
 		console->sendCtrlC();
@@ -211,6 +218,19 @@ void PlayerBackend::recvMessage()
 void PlayerBackend::_updatePosition()
 {
 	pPlayer->sendUpdatePosition();
+
+	/* Piggyback on the existing position timer to periodically re-check the
+	 * current audio track's live channel count, so a format change mid-
+	 * stream (e.g. an ad break swapping 5.1 program audio for 2.0 stereo)
+	 * is actually noticed - see recvAudioTrackCurrent(). Throttled well
+	 * below the 100ms position-update rate: this only needs to catch a
+	 * change within a couple of seconds, not every tick. */
+	if (++mAudioChannelsCheckCounter >= 20)
+	{
+		mAudioChannelsCheckCounter = 0;
+		eDebug("[DIAG] PlayerBackend::_updatePosition - sending periodic ac poll");
+		pPlayer->sendUpdateAudioTrackCurrent();
+	}
 }
 
 int PlayerBackend::start(const std::string& path, const std::map<std::string,std::string>& headers)
@@ -342,6 +362,7 @@ int PlayerBackend::audioSelectTrack(int trackNum)
 {
 	if (trackNum >= 0 && trackNum < (int) mAudioStreams.size())
 	{
+		eDebug("[DIAG] PlayerBackend::audioSelectTrack ENTRY - trackNum=%d id=%d", trackNum, mAudioStreams[trackNum].id);
 		mMessageThread.send(Message(Message::tAudioSelect, mAudioStreams[trackNum].id));
 		return 0;
 	}
@@ -489,6 +510,10 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 			eDebug("PlayerBackend::gotMessage - resume");
 			gotPlayerMessage(PlayerMessage::resume);
 			break;
+		case Message::audioChannelsChanged:
+			eDebug("PlayerBackend::gotMessage - audioChannelsChanged");
+			gotPlayerMessage(PlayerMessage::audioChannelsChanged);
+			break;
 		case Message::videoSizeChanged:
 			eDebug("PlayerBackend::gotMessage - videoSizeChanged");
 			gotPlayerMessage(PlayerMessage::videoSizeChanged);
@@ -550,6 +575,7 @@ void PlayerBackend::recvStarted(int status)
 
 void PlayerBackend::recvStopped(int retval)
 {
+	eDebug("[DIAG] PlayerBackend::recvStopped ENTRY - retval=%d", retval);
 	pthread_mutex_lock(&mWaitForStopMutex);
 	if (mWaitForStop)
 	{
@@ -558,7 +584,9 @@ void PlayerBackend::recvStopped(int retval)
 	}
 	pthread_mutex_unlock(&mWaitForStopMutex);
 	eDebug("PlayerBackend::recvStopped - retval = %d", retval);
+	eDebug("[DIAG] PlayerBackend::recvStopped - calling quit(0)");
 	quit(0);
+	eDebug("[DIAG] PlayerBackend::recvStopped - sending Message::stop");
 	mMessageMain.send(Message(Message::stop));
 }
 
@@ -591,15 +619,44 @@ void PlayerBackend::recvAudioTracksList(int status, std::vector<audioStream>& st
 
 void PlayerBackend::recvAudioTrackCurrent(int status, audioStream& stream)
 { 
-	eDebug("PlayerBackend::recvAudioTrackCurrent - status = %d", status);
+	eDebug("PlayerBackend::recvAudioTrackCurrent - status = %d id=%d channels=%d mAudioStreams.size()=%zu",
+		status, stream.id, stream.channels, mAudioStreams.size());
 	if(!status)
 	{
+		audioStream prev;
 		if (pCurrentAudio != NULL)
 		{
+			prev = *pCurrentAudio;
 			delete pCurrentAudio;
 			pCurrentAudio = NULL;
 		}
 		pCurrentAudio = new audioStream(stream);
+
+		/* The container's initial stream probe doesn't track mid-stream
+		 * channel-layout changes (e.g. an ad break swapping 5.1 program
+		 * audio for 2.0 stereo on the same track) - exteplayer3 now keeps
+		 * the underlying track's channel count live from actually decoded
+		 * frames, so a fresh "ac" query here can genuinely differ from
+		 * what mAudioStreams was populated with at open time. Keep that
+		 * cache in sync too, since getTrackInfo()/audioGetTrackInfo() read
+		 * from mAudioStreams, not from pCurrentAudio directly. */
+		if (stream.channels > 0 && prev.channels != stream.channels)
+		{
+			eDebug("PlayerBackend::recvAudioTrackCurrent - channels changed %d -> %d, searching mAudioStreams for id=%d",
+				prev.channels, stream.channels, stream.id);
+			bool found = false;
+			for (std::vector<audioStream>::iterator i(mAudioStreams.begin()); i != mAudioStreams.end(); ++i)
+			{
+				if (i->id == stream.id)
+				{
+					found = true;
+					i->channels = stream.channels;
+					break;
+				}
+			}
+			eDebug("PlayerBackend::recvAudioTrackCurrent - found=%d, sending audioChannelsChanged", (int)found);
+			mMessageMain.send(Message(Message::audioChannelsChanged));
+		}
 	}
 } 
 
