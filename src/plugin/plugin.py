@@ -47,11 +47,7 @@ config_serviceapp.servicemp3.player = ConfigSelection(default="gstplayer", choic
 if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
 	config_serviceapp.passthrough_fix_enable = ConfigYesNo(default=True)
 	delay_choices = [(i, ngettext("%d ms", "%d ms", i) % i) for i in list(range(0, 3100, 100))]  # noqa: F821
-	config_serviceapp.passthrough_fix_delay = ConfigSelection(choices=delay_choices, default=300)
-if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_aac.value == "passthrough":
-	config_serviceapp.passthrough_fix2_enable = ConfigYesNo(default=True)
-	delay_choices = [(i, ngettext("%d ms", "%d ms", i) % i) for i in list(range(0, 3100, 100))]  # noqa: F821
-	config_serviceapp.passthrough_fix2_delay = ConfigSelection(choices=delay_choices, default=300)
+	config_serviceapp.passthrough_fix_delay = ConfigSelection(choices=delay_choices, default=0)
 
 config_serviceapp.options = ConfigSubDict()
 config_serviceapp.options["servicemp3"] = ConfigSubsection()
@@ -201,10 +197,6 @@ class ServiceAppSettings(Setup):
 			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
 			if config_serviceapp.passthrough_fix_enable.value:
 				config_list.append((_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
-		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_aac.value == "passthrough":
-			config_list.append((_("Enable AAC+ passthrough fix"), config_serviceapp.passthrough_fix2_enable, _("Enables AAC+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
-			if config_serviceapp.passthrough_fix2_enable.value:
-				config_list.append((_("AAC+ Passthrough fix delay"), config_serviceapp.passthrough_fix2_delay, _("Select the delay that will be used for AAC+ Passthrough fix.")))
 
 	def player_options(self, player_type, service_type, config_list):
 		player_cfg = getattr(config_serviceapp, player_type)[service_type]
