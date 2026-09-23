@@ -293,6 +293,14 @@ int PlayerBackend::seekRelative(int seconds)
 	return 0;
 }
 
+int PlayerBackend::outputClear()
+{
+	if (!playbackStarted)
+		return -1;
+	mMessageThread.send(Message(Message::tOutputClear));
+	return 0;
+}
+
 int PlayerBackend::getPlayPosition(int& mseconds)
 {
 	if (!playbackStarted)
@@ -473,6 +481,10 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 		case Message::tSeekRelative:
 			eDebug("PlayerBackend::gotMessage - tSeekRelative");
 			pPlayer->sendSeekRelative(message.dataInt);
+			break;
+		case Message::tOutputClear:
+			eDebug("PlayerBackend::gotMessage - tOutputClear");
+			pPlayer->sendOutputClear();
 			break;
 		case Message::tAudioSelect:
 			eDebug("PlayerBackend::gotMessage - tAudioSelect");

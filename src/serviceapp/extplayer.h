@@ -117,6 +117,7 @@ public:
 	virtual int sendSubtitleSelectTrack(int trackId){ return -1;}
 	virtual int sendSeekTo(int seconds){ return -1;}
 	virtual int sendSeekRelative(int seconds){ return -1;}
+	virtual int sendOutputClear(){ return -1;}
 };
 
 
@@ -201,6 +202,8 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 			tSeekTo,
 			seekRelative,
 			tSeekRelative,
+			outputClear,
+			tOutputClear,
 			audioSelect,
 			tAudioSelect,
 			audioList,
@@ -333,6 +336,7 @@ public:
 	int resume();
 	int seekTo(int seconds);
 	int seekRelative(int seconds);
+	int outputClear();
 	int getLength(int& mseconds);
 	int getPlayPosition(int& mseconds);
 	int getErrorMessage(errorMessage& error);

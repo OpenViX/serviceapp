@@ -197,10 +197,14 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("Connection speed"), serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
 
 	def serviceapp_passthrough_options(self, config_list):
-		if SystemInfo["Vu_EAC3_fix"]:
+		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
 			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
 			if config_serviceapp.passthrough_fix_enable.value:
 				config_list.append((_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
+		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_aac.value == "passthrough":
+			config_list.append((_("Enable AAC+ passthrough fix"), config_serviceapp.passthrough_fix2_enable, _("Enables AAC+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
+			if config_serviceapp.passthrough_fix2_enable.value:
+				config_list.append((_("AAC+ Passthrough fix delay"), config_serviceapp.passthrough_fix2_delay, _("Select the delay that will be used for AAC+ Passthrough fix.")))
 
 	def player_options(self, player_type, service_type, config_list):
 		player_cfg = getattr(config_serviceapp, player_type)[service_type]

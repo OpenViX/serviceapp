@@ -272,20 +272,11 @@ void eServiceApp::passthroughFix()
 {
 	eDebug("[ServiceApp] Setting 'ac3+ passthrough' to force correct operation");
 	CFile::writeStr("/proc/stb/audio/ac3", "passthrough");
-	bool validposition = false;
-	pts_t ppos = 0;
-	if (getPlayPosition(ppos) >= 0)
-	{
-		validposition = true;
-		ppos -= 9000; /* seek back ~100ms instead of 1s for faster audio switch */
-		if (ppos < 0)
-			ppos = 0;
-	}
-	if (validposition)
-	{
-		/* flush */
-		seekTo(ppos);
-	}
+	/* Flush the exteplayer3 output without seeking the HLS/container stream.
+	 * The legacy seekTo() workaround performs OUTPUT_CLEAR followed by an
+	 * actual container seek, which causes a several-second interruption. */
+	if (player)
+		player->outputClear();
 }
 
 void eServiceApp::passthroughFix2()

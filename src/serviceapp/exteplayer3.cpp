@@ -275,6 +275,11 @@ int ExtEplayer3::sendSeekRelative(int seconds)
 	return processSend(sstm.str());
 }
 
+int ExtEplayer3::sendOutputClear()
+{
+	return processSend(std::string("r\n"));
+}
+
 void ExtEplayer3::handleProcessStopped(int retval)
 {
 	eDebug("[DIAG] ExtEplayer3::handleProcessStopped ENTRY - actual retval=%d (recvStopped always called with 0)", retval);
