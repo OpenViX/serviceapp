@@ -597,8 +597,17 @@ void eServiceApp::signalEventUpdatedInfo()
 	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
 	if (is_passthrough_fix_enabled)
 	{
-		std::string pass = CFile::read("/proc/stb/audio/ac3");
-		if (replace_all(replace_all(pass, "\r", ""), "\n", "") == "passthrough")
+		/* The AC3+ workaround must only run for the actual E-AC3/AC3+
+		 * audio track. Checking /proc/stb/audio/ac3 alone makes the
+		 * workaround run on AAC-LC streams too, because the proc setting
+		 * persists after an AC3+ service has been played. */
+		audioStream track;
+		int currentTrack = player ? player->audioGetCurrentTrackNum() : -1;
+		bool eac3_passthrough = player && currentTrack >= 0 &&
+			player->audioGetTrackInfo(track, currentTrack) == 0 &&
+			(track.description == "Dolby Atmos" || track.description == "Dolby Digital +" ||
+			 track.description == "A_EAC3" || track.description == "AC3+");
+		if (eac3_passthrough)
 		{
 			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
 			m_passthrough_fix_timer->stop();
