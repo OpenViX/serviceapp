@@ -192,11 +192,6 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("Auto select stream"), serviceapp_options_cfg.autoselect_stream, _("Turn on auto-selection of streams according to set Connection speed.")))
 		config_list.append((self.indent + _("Connection speed"), serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
 
-	def serviceapp_passthrough_options(self, config_list):
-		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
-			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
-			if config_serviceapp.passthrough_fix_enable.value:
-				config_list.append((_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
 
 	def player_options(self, player_type, service_type, config_list):
 		player_cfg = getattr(config_serviceapp, player_type)[service_type]
@@ -216,14 +211,12 @@ class ServiceAppSettings(Setup):
 		config_list = [(_("Enigma2 playback system") + "*", config_serviceapp.servicemp3.replace, _("Select the player which will be used for Enigma2 playback."))]
 		if config_serviceapp.servicemp3.replace.value:
 			config_list.append((_("Player"), config_serviceapp.servicemp3.player, _("Select the player which will be used in serviceapp for Enigma2 playback.")))
-			self.serviceapp_passthrough_options(config_list)
 			config_list.append(self.spacer)
 			config_list.append((_("ServiceMp3 (%s)" % str(serviceapp_client.ID_SERVICEMP3)),))
 			if config_serviceapp.servicemp3.player.value == "gstplayer":
 				self.player_options("gstplayer", "servicemp3", config_list)
 			elif config_serviceapp.servicemp3.player.value == "exteplayer3":
 				self.player_options("exteplayer3", "servicemp3", config_list)
-		self.serviceapp_passthrough_options(config_list)
 		config_list.append(self.spacer)
 		config_list.append((_("ServiceGstPlayer (%s)" % str(serviceapp_client.ID_SERVICEGSTPLAYER)),))
 		self.player_options("gstplayer", "servicegstplayer", config_list)
