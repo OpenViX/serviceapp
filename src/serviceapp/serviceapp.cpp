@@ -1619,9 +1619,10 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 	bool lpcmInjection;
 	bool dtsTranscoding;
 	bool truehdTranscoding;
+	bool aacHeTranscoding;
 	int rtmpProtocol;
 
-	if (!PyArg_ParseTuple(args, "ibbbbbbbbbbi",
+	if (!PyArg_ParseTuple(args, "ibbbbbbbbbbbi",
 				&settingId,
 				&aacSwDecoding,
 				&dtsSwDecoding,
@@ -1633,6 +1634,7 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 				&mp3SwDecoding,
 				&dtsTranscoding,
 				&truehdTranscoding,
+				&aacHeTranscoding,
 				&rtmpProtocol))
 		return NULL;
 
@@ -1664,6 +1666,7 @@ exteplayer3_set_setting(PyObject *self, PyObject *args)
 		options->GetSettingMap()[EXT3_SW_DECODING_DTS].setValue(dtsSwDecoding);
 		options->GetSettingMap()[EXT3_TRANSCODE_DTS_AC3].setValue(dtsTranscoding);
 		options->GetSettingMap()[EXT3_TRANSCODE_TRUEHD_AC3].setValue(truehdTranscoding);
+		options->GetSettingMap()[EXT3_TRANSCODE_AAC_HE].setValue(aacHeTranscoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_WMA].setValue(wmaSwDecoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_MP3].setValue(mp3SwDecoding);
 		options->GetSettingMap()[EXT3_LPCM_INJECTION].setValue(lpcmInjection);
@@ -1740,7 +1743,7 @@ static PyMethodDef serviceappMethods[] = {
 	 " bufferDuration - in seconds\n"
 	},
 	{"exteplayer3_set_setting", exteplayer3_set_setting, METH_VARARGS,
-	 "set exteplayer3 settings (setting_id, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding, eac3SwDecoding, mp3SwDecoding, rtmpProtocol)\n\n"
+	 "set exteplayer3 settings (setting_id, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding, eac3SwDecoding, mp3SwDecoding, dtsTranscoding, truehdTranscoding, aacHeTranscoding, rtmpProtocol)\n\n"
 	 " setting_id - (0 - servicemp3, 1 - servicegst, 2 - serviceextep3, 3 - user)\n"
 	 " aacSwDecoding - (True, False)\n"
 	 " dtsSwDecoding - (True, False)\n"
@@ -1750,6 +1753,9 @@ static PyMethodDef serviceappMethods[] = {
 	 " ac3SwDecoding - (True, False)\n"
 	 " eac3SwDecoding - (True, False)\n"
 	 " mp3SwDecoding - (True, False)\n"
+	 " dtsTranscoding - (True, False)\n"
+	 " truehdTranscoding - (True, False)\n"
+	 " aacHeTranscoding - (True, False)\n"
 	 " rtmpProtocol - (0|1|2)\n"
 	},
 	{"serviceapp_set_setting", serviceapp_set_setting, METH_VARARGS,

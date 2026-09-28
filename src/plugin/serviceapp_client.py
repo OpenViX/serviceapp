@@ -71,7 +71,7 @@ def setGstreamerPlayerSettings(settingId, videoSink, audioSink, subtitleEnabled,
 				bufferDuration)
 
 
-def setExtEplayer3Settings(settingId, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding=False, eac3SwDecoding=False, mp3SwDecoding=False, rtmpProtocol=0, dtsTranscoding=False, truehdTranscoding=False):
+def setExtEplayer3Settings(settingId, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding=False, eac3SwDecoding=False, mp3SwDecoding=False, rtmpProtocol=0, dtsTranscoding=False, truehdTranscoding=False, aacHeTranscoding=False):
 	return serviceapp.exteplayer3_set_setting(settingId,
 				aacSwDecoding,
 				dtsSwDecoding,
@@ -83,4 +83,5 @@ def setExtEplayer3Settings(settingId, aacSwDecoding, dtsSwDecoding, wmaSwDecodin
 				mp3SwDecoding,
 				dtsTranscoding,
 				truehdTranscoding,
+				aacHeTranscoding,
 				rtmpProtocol)

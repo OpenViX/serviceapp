@@ -78,6 +78,7 @@ for key in list(config_serviceapp.exteplayer3.keys()):
 	config_serviceapp.exteplayer3[key].dts_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].dts_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital"))])
 	config_serviceapp.exteplayer3[key].truehd_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital"))])
+	config_serviceapp.exteplayer3[key].aac_he_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("aaclc", _("AAC-LC"))])
 	config_serviceapp.exteplayer3[key].mp3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].wma_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].lpcm_injecion = ConfigYesNo(default=False)
@@ -149,7 +150,8 @@ def init_serviceapp_settings():
 			player_cfg.mp3_swdecoding.value,
 			rtmp_proto_val,
 			player_cfg.dts_transcoding.value == "ac3",
-			player_cfg.truehd_transcoding.value == "ac3")
+			player_cfg.truehd_transcoding.value == "ac3",
+			player_cfg.aac_he_transcoding.value == "aaclc",)
 
 	if config_serviceapp.servicemp3.player.value == "gstplayer":
 		serviceapp_client.setServiceMP3GstPlayer()
@@ -182,6 +184,7 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("WMA software decoding"), exteplayer3_options_cfg.wma_swdecoding, _("Turn on WMA1, WMA2, WMA/PRO software decoding.")))
 		config_list.append((self.indent + _("Dolby TrueHD transcoding"), exteplayer3_options_cfg.truehd_transcoding, _("Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital.")))
 		config_list.append((self.indent + _("DTS / DTS-HD transcoding"), exteplayer3_options_cfg.dts_transcoding, _("Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital.")))
+		config_list.append((self.indent + _("HE-AAC transcoding"), exteplayer3_options_cfg.aac_he_transcoding, _("Choose whether HE-AAC sound tracks should be transcoded to AAC-LC.")))
 		config_list.append((self.indent + _("Stereo downmix"), exteplayer3_options_cfg.downmix, _("Turn on downmix to stereo, when software decoding is in use")))
 		config_list.append((self.indent + _("LPCM injection"), exteplayer3_options_cfg.lpcm_injecion, _("Software decoder use LPCM for injection (otherwise wav PCM will be used)")))
 		config_list.append((self.indent + _("RTMP protocol implementation"), exteplayer3_options_cfg.rtmp_protocol, _("Set which RTMP protocol implementation will be used for playback of RTMP streams")))
@@ -192,6 +195,11 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("Auto select stream"), serviceapp_options_cfg.autoselect_stream, _("Turn on auto-selection of streams according to set Connection speed.")))
 		config_list.append((self.indent + _("Connection speed"), serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
 
+	def serviceapp_passthrough_options(self, config_list):
+		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
+			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
+			if config_serviceapp.passthrough_fix_enable.value:
+				config_list.append((_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
 
 	def player_options(self, player_type, service_type, config_list):
 		player_cfg = getattr(config_serviceapp, player_type)[service_type]
