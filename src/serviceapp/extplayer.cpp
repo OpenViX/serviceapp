@@ -622,10 +622,25 @@ void PlayerBackend::recvResumed(int status)
 	}
 }
 
+static bool isDolbyDigitalPlusLabel(const std::string& description)
+{
+	return description == "Dolby Atmos" || description == "Dolby Digital +";
+}
+
 void PlayerBackend::recvAudioTracksList(int status, std::vector<audioStream>& streams)
 {
-	if(!status) 
+	if(!status)
+	{
 		mAudioStreams = streams;
+		/* The track list is cached by the player and reflects the open-time
+		 * snapshot; re-apply the live Atmos/DD+ label learned from "ac". */
+		for (std::vector<audioStream>::iterator i(mAudioStreams.begin()); i != mAudioStreams.end(); ++i)
+		{
+			std::map<int, std::string>::const_iterator o(mAudioDescOverride.find(i->id));
+			if (o != mAudioDescOverride.end() && isDolbyDigitalPlusLabel(i->description))
+				i->description = o->second;
+		}
+	}
 	recvMessage();
 }
 
@@ -668,6 +683,33 @@ void PlayerBackend::recvAudioTrackCurrent(int status, audioStream& stream)
 			}
 			eDebug("PlayerBackend::recvAudioTrackCurrent - found=%d, sending audioChannelsChanged", (int)found);
 			mMessageMain.send(Message(Message::audioChannelsChanged));
+		}
+
+		/* exteplayer3 now detects Dolby Atmos (JOC) live from the E-AC-3
+		 * packets, so the "Dolby Digital +" / "Dolby Atmos" label can change
+		 * mid-stream (ad break, programme change) or differ from the label
+		 * captured when the stream was opened. Mirror it into mAudioStreams,
+		 * which is what the infobar/track list read. */
+		if (isDolbyDigitalPlusLabel(stream.description))
+		{
+			bool labelChanged = false;
+			mAudioDescOverride[stream.id] = stream.description;
+			for (std::vector<audioStream>::iterator i(mAudioStreams.begin()); i != mAudioStreams.end(); ++i)
+			{
+				if (i->id == stream.id)
+				{
+					if (isDolbyDigitalPlusLabel(i->description) && i->description != stream.description)
+					{
+						eDebug("PlayerBackend::recvAudioTrackCurrent - audio label changed '%s' -> '%s' for id=%d",
+							i->description.c_str(), stream.description.c_str(), stream.id);
+						i->description = stream.description;
+						labelChanged = true;
+					}
+					break;
+				}
+			}
+			if (labelChanged)
+				mMessageMain.send(Message(Message::audioChannelsChanged));
 		}
 	}
 } 

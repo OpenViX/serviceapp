@@ -7,6 +7,8 @@
 #include <lib/python/connections.h>
 
 
+#include <map>
+#include <string>
 #include "cJSON/cJSON.h"
 #include "myconsole.h"
 #include "subtitles/subtitles.h"
@@ -240,6 +242,8 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 	errorMessage *pErrorMessage;
 
 	std::vector<audioStream> mAudioStreams;
+	/* Live Dolby Digital+/Atmos label per track id, kept across audio list refreshes */
+	std::map<int, std::string> mAudioDescOverride;
 	std::vector<subtitleStream> mSubtitleStreams;
 	std::queue<subtitleMessage> mSubtitles;
 
