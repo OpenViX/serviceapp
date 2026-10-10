@@ -44,11 +44,6 @@ config_serviceapp.servicemp3 = ConfigSubsection()
 config_serviceapp.servicemp3.replace = ConfigBoolean(default=False, descriptions={False: _("original"), True: _("serviceapp")})
 config_serviceapp.servicemp3.replace.value = serviceapp_client.isServiceMP3Replaced()
 config_serviceapp.servicemp3.player = ConfigSelection(default="gstplayer", choices=player_choices)
-if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
-	config_serviceapp.passthrough_fix_enable = ConfigYesNo(default=True)
-	delay_choices = [(i, ngettext("%d ms", "%d ms", i) % i) for i in list(range(0, 3100, 100))]  # noqa: F821
-	config_serviceapp.passthrough_fix_delay = ConfigSelection(choices=delay_choices, default=0)
-
 config_serviceapp.options = ConfigSubDict()
 config_serviceapp.options["servicemp3"] = ConfigSubsection()
 config_serviceapp.options["servicegstplayer"] = ConfigSubsection()
@@ -194,12 +189,6 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("HLS Explorer"), serviceapp_options_cfg.hls_explorer, _("Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices.")))
 		config_list.append((self.indent + _("Auto select stream"), serviceapp_options_cfg.autoselect_stream, _("Turn on auto-selection of streams according to set Connection speed.")))
 		config_list.append((self.indent + _("Connection speed"), serviceapp_options_cfg.connection_speed_kb, _("Set connection speed in kb/s, according to which you want to have streams auto-selected")))
-
-	def serviceapp_passthrough_options(self, config_list):
-		if SystemInfo["Vu_EAC3_fix"] and config.av.downmix_ac3.value == "passthrough":
-			config_list.append((_("Enable AC3+ passthrough fix"), config_serviceapp.passthrough_fix_enable, _("Enables AC3+ passthrough fix for Vu+ Ultimo4K / Duo4KSE.")))
-			if config_serviceapp.passthrough_fix_enable.value:
-				config_list.append((_("AC3+ Passthrough fix delay"), config_serviceapp.passthrough_fix_delay, _("Select the delay that will be used for AC3+ Passthrough fix.")))
 
 	def player_options(self, player_type, service_type, config_list):
 		player_cfg = getattr(config_serviceapp, player_type)[service_type]
