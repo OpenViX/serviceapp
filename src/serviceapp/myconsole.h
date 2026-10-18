@@ -43,6 +43,7 @@ public:
 	int getPID() { return pid; }
 	void kill();
 	void sendCtrlC();
+	void sendKill();
 	void sendEOF();
 	void write( const char *data, int len );
 	void setFileFD(int num, int fd) { if (num >= 0 && num <= 2) filefd[num] = fd; }

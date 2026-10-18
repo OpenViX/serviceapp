@@ -37,6 +37,7 @@ public:
 	int start(eMainloop *context);
 	int sendStop();
 	int sendForceStop();
+	int sendKill();
 	int sendPause();
 	int sendResume();
 	int sendUpdateLength();

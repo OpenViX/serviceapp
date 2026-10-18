@@ -42,6 +42,7 @@ protected:
 	int processStart(eMainloop *context);
 	int processSend(const std::string& data);
 	void processKill();
+	void processForceKill();
 	bool processRunning();
 public:
 	PlayerApp(int parseOutput=STD_ERROR):
@@ -108,6 +109,7 @@ class iPlayerSend
 public:
 	virtual int sendStop() { return -1;}
 	virtual int sendForceStop() { return -1;}
+	virtual int sendKill() { return -1;}
 	virtual int sendPause(){ return -1;}
 	virtual int sendResume(){ return -1;}
 	virtual int sendUpdateLength(){ return -1;}
@@ -197,6 +199,7 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 			stop,
 			tStop,
 			tKill,
+			tForceKill,
 			pause,
 			tPause,
 			resume,

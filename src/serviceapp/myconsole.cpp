@@ -181,6 +181,16 @@ void eConsoleContainer::sendCtrlC()
 	}
 }
 
+void eConsoleContainer::sendKill()
+{
+	if ( killstate != -1 && pid != -1 )
+	{
+		eDebug("[ServiceApp][eConsoleContainer] user send SIGKILL");
+		/* the pipes stay open: their hangup reports the end of the app */
+		::kill(-pid, SIGKILL);
+	}
+}
+
 void eConsoleContainer::sendEOF()
 {
 	if (out)

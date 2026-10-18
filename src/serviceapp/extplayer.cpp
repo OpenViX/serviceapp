@@ -150,6 +150,14 @@ void PlayerApp::processKill()
 	}
 }
 
+void PlayerApp::processForceKill()
+{
+	if (console && console->running())
+	{
+		console->sendKill();
+	}
+}
+
 bool PlayerApp::processRunning()
 {
 	return console ? console->running() : false;
@@ -254,7 +262,17 @@ int PlayerBackend::stop()
 		t.kill();
 		if (t.isTimedOut())
 		{
+			/* the join in kill() blocks the main loop until the app ends,
+			 * a SIGKILL follows when it ignores SIGINT */
+			mWaitForStop = true;
+			WaitThread t2(mWaitForStopMutex, mWaitForStopCond, mWaitForStop, 2000);
+			t2.run();
 			mMessageThread.send(Message(Message::tKill));
+			t2.kill();
+			if (t2.isTimedOut())
+			{
+				mMessageThread.send(Message(Message::tForceKill));
+			}
 		}
 	}
 	kill();
@@ -469,6 +487,11 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 			if(mDebug)
 				eDebug("PlayerBackend::gotMessage - tKill");
 			pPlayer->sendForceStop();
+			break;
+		case Message::tForceKill:
+			if(mDebug)
+				eDebug("PlayerBackend::gotMessage - tForceKill");
+			pPlayer->sendKill();
 			break;
 		case Message::tPause:
 			if(mDebug)
