@@ -287,6 +287,14 @@ int PlayerBackend::pause()
 	return 0;
 }
 
+int PlayerBackend::fastForward(int speed)
+{
+	if (!playbackStarted || !pPlayer->canWind())
+		return -1;
+	mMessageThread.send(Message(Message::tFastForward, speed));
+	return 0;
+}
+
 int PlayerBackend::resume()
 {
 	if (!playbackStarted)
@@ -503,6 +511,11 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 				eDebug("PlayerBackend::gotMessage - tUnpause");
 			pPlayer->sendResume();
 			break;
+		case Message::tFastForward:
+			if(mDebug)
+				eDebug("PlayerBackend::gotMessage - tFastForward");
+			pPlayer->sendFastForward(message.dataInt);
+			break;
 		case Message::tSeekTo:
 			if(mDebug)
 				eDebug("PlayerBackend::gotMessage - tSeekTo");
@@ -598,6 +611,12 @@ void PlayerBackend::gotMessage(const PlayerBackend::Message& message)
 			if(mDebug)
 				eDebug("PlayerBackend::gotMessage - error");
 			gotPlayerMessage(PlayerMessage::error);
+			break;
+		case Message::windStart:
+			gotPlayerMessage(PlayerMessage::windStart);
+			break;
+		case Message::windEnd:
+			gotPlayerMessage(PlayerMessage::windEnd);
 			break;
 		case Message::subtitleAvailable:
 			if(mDebug)
