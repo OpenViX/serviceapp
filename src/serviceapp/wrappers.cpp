@@ -140,7 +140,8 @@ ssize_t readLine(SSL *ssl, int fd, char** buffer, size_t* bufsize)
 		if (result <= 0 || (*buffer)[i] == '\n')
 		{
 			(*buffer)[i] = '\0';
-			return result <= 0 ? -1 : i;
+			/* the last line may end without a newline */
+			return result <= 0 && !i ? -1 : i;
 		}
 		if ((*buffer)[i] != '\r') i++;
 	}

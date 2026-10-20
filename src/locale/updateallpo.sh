@@ -29,15 +29,10 @@ languages=($(gawk ' BEGIN { FS=" " }
 #
 
 printf "Creating temporary file $PluginName-py.pot\n"
-find .. -name "*.py" -exec xgettext --no-wrap -L Python --from-code=UTF-8 \
-    -kpgettext:1c,2 --add-comments="TRANSLATORS:" -d $PluginName -s \
-    -o $PluginName-py.pot {} +
-
+find -s -X .. -name "*.py" -exec xgettext --no-wrap -L Python --from-code=UTF-8 -kpgettext:1c,2 --add-comments="TRANSLATORS:" -d $PluginName -s -o $PluginName-py.pot {} \+
 sed --in-place $PluginName-py.pot --expression=s/CHARSET/UTF-8/
-
 printf "Creating temporary file $PluginName-xml.pot\n"
-find .. -name "*.xml" -exec python xml2po.py {} + > $PluginName-xml.pot
-
+find -s -X .. -name "*.xml" -exec python xml2po.py {} \+ > $PluginName-xml.pot
 printf "Merging pot files to create: $PluginName.pot\n"
 cat $PluginName-py.pot $PluginName-xml.pot | msguniq --no-wrap -o $PluginName.pot -
 OLDIFS=$IFS

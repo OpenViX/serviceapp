@@ -7,6 +7,54 @@
 #define M3U8_STREAM_INFO "#EXT-X-STREAM-INF"
 #define M3U8_MEDIA_SEQUENCE "#EXT-X-MEDIA-SEQUENCE"
 
+// a variant URL relative to the master playlist, its dot segments resolved
+static std::string resolveUrl(const std::string& base, const std::string& ref)
+{
+    if (!ref.compare(0, 4, "http"))
+        return ref;
+    size_t schemeEnd = base.find("://");
+    if (schemeEnd == std::string::npos)
+        return ref;
+    if (!ref.compare(0, 2, "//"))
+        return base.substr(0, schemeEnd + 1) + ref;
+    size_t pathStart = base.find('/', schemeEnd + 3);
+    std::string origin = base.substr(0, pathStart);
+    std::string path;
+    if (!ref.empty() && ref[0] == '/')
+        path = ref;
+    else
+    {
+        std::string basePath = pathStart == std::string::npos ? "/" : base.substr(pathStart);
+        basePath = basePath.substr(0, basePath.find_first_of("?#"));
+        path = basePath.substr(0, basePath.rfind('/') + 1) + ref;
+    }
+    size_t queryStart = path.find_first_of("?#");
+    std::string query = queryStart == std::string::npos ? "" : path.substr(queryStart);
+    path = path.substr(0, queryStart);
+
+    std::vector<std::string> segments;
+    std::istringstream parts(path.substr(1));
+    std::string part;
+    bool directory = path.size() > 1 && path[path.size() - 1] == '/';
+    while (std::getline(parts, part, '/'))
+    {
+        directory = part == "." || part == "..";
+        if (part == "..")
+        {
+            if (!segments.empty())
+                segments.pop_back();
+        }
+        else if (part != ".")
+            segments.push_back(part);
+    }
+    std::string resolved;
+    for (size_t i = 0; i < segments.size(); i++)
+        resolved += "/" + segments[i];
+    if (directory || resolved.empty())
+        resolved += "/";
+    return origin + resolved + query;
+}
+
 bool isM3U8Url(const std::string &url)
 {
     Url purl(url);
@@ -184,6 +232,8 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, Heade
     bool contentTypeParsed = false;
     bool m3u8HeaderParsed = false;
     bool m3u8StreamInfoParsing = false;
+    // audio of its own (EXT-X-MEDIA) is not in the variant playlists
+    bool alternativeAudio = false;
     M3U8StreamInfo m3u8StreamInfo;
 
     size_t bufferSize = 1024;
@@ -307,17 +357,7 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, Heade
                 }
 
                 fprintf(stderr, "[%s] - continue parsing m3u8 stream info\n", __func__);
-                if (!strncmp(lineBuffer, "http", 4))
-                {
-                    m3u8StreamInfo.url = lineBuffer;
-                }
-                else
-                {
-                    if (strlen(lineBuffer) > 0 && lineBuffer[0] == '/')
-                        m3u8StreamInfo.url = purl.proto().append("://").append(purl.host()).append(lineBuffer);
-                    else
-                        m3u8StreamInfo.url = url.substr(0, url.rfind('/') + 1) + lineBuffer;
-                }
+                m3u8StreamInfo.url = resolveUrl(url, lineBuffer);
                 m3u8StreamInfo.headers = headers;
                 streams.push_back(m3u8StreamInfo);
                 m3u8StreamInfoParsing = false;
@@ -329,6 +369,10 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, Heade
                     m3u8StreamInfoParsing = true;
                     std::string parsed(lineBuffer);
                     parseStreamInfoAttributes(parsed.substr(18).c_str(), m3u8StreamInfo);
+                }
+                else if (!strncmp(lineBuffer, "#EXT-X-MEDIA:", 13) && strstr(lineBuffer, "TYPE=AUDIO") && strstr(lineBuffer, "URI="))
+                {
+                    alternativeAudio = true;
                 }
                 else
                 {
@@ -342,6 +386,13 @@ int M3U8VariantsExplorer::getVariantsFromMasterUrl(const std::string& url, Heade
                 break;
             }
         }
+    }
+    // a single variant would play without that audio: the player gets the
+    // master playlist and its audio tracks
+    if (alternativeAudio && !streams.empty())
+    {
+        fprintf(stderr, "[%s] - audio tracks of their own, playing the master playlist\n", __func__);
+        streams.clear();
     }
     if (!streams.empty())
         ret = 0;

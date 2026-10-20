@@ -228,7 +228,13 @@ int convertToUTF8(const std::string &input_string, const std::string &input_enco
         PyErr_Print();
         return 1;
     }
+
+    // NEW
+    //py_unicode = PyCodec_Decode(py_string, input_encoding.c_str(), "strict");
+
+    // PyUnicode_AsDecodedObject is deprecated
     py_unicode = PyUnicode_AsDecodedObject(py_string, input_encoding.c_str(), "strict");
+
     if (py_unicode == NULL)
     {
         Py_DECREF(py_string);

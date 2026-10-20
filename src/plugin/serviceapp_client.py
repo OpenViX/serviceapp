@@ -27,7 +27,7 @@ def isExtEplayer3Available():
 
 
 def isGstPlayerAvailable():
-	return isfile(eEnv.resolve("$bindir/gstplayer_gst-1.0"))
+	return isfile(eEnv.resolve("$bindir/gstplayer2"))
 
 
 def isServiceMP3Replaced():
@@ -55,33 +55,39 @@ def setUseUserSettings():
 
 
 def setServiceAppSettings(settingId, HLSExplorer, autoSelectStream, connectionSpeedInKb, autoTurnOnSubtitles=True):
-	return serviceapp.serviceapp_set_setting(settingId,
-				HLSExplorer,
-				autoSelectStream,
-				connectionSpeedInKb,
-				autoTurnOnSubtitles)
+	return serviceapp.serviceapp_set_setting(
+		settingId,
+		HLSExplorer,
+		autoSelectStream,
+		connectionSpeedInKb,
+		autoTurnOnSubtitles
+	)
 
 
 def setGstreamerPlayerSettings(settingId, videoSink, audioSink, subtitleEnabled, bufferSize, bufferDuration):
-	return serviceapp.gstplayer_set_setting(settingId,
-				videoSink,
-				audioSink,
-				subtitleEnabled,
-				bufferSize,
-				bufferDuration)
+	return serviceapp.gstplayer_set_setting(
+		settingId,
+		videoSink,
+		audioSink,
+		subtitleEnabled,
+		bufferSize,
+		bufferDuration
+	)
 
 
 def setExtEplayer3Settings(settingId, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding=False, eac3SwDecoding=False, mp3SwDecoding=False, rtmpProtocol=0, dtsTranscoding=False, truehdTranscoding=False, aacHeTranscoding=False):
-	return serviceapp.exteplayer3_set_setting(settingId,
-				aacSwDecoding,
-				dtsSwDecoding,
-				wmaSwDecoding,
-				lpcmInjection,
-				downmix,
-				ac3SwDecoding,
-				eac3SwDecoding,
-				mp3SwDecoding,
-				dtsTranscoding,
-				truehdTranscoding,
-				aacHeTranscoding,
-				rtmpProtocol)
+	return serviceapp.exteplayer3_set_setting(
+		settingId,
+		aacSwDecoding,
+		dtsSwDecoding,
+		wmaSwDecoding,
+		lpcmInjection,
+		downmix,
+		ac3SwDecoding,
+		eac3SwDecoding,
+		mp3SwDecoding,
+		dtsTranscoding,
+		truehdTranscoding,
+		aacHeTranscoding,
+		rtmpProtocol
+	)

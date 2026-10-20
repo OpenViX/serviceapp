@@ -19,6 +19,7 @@ int bidirpipe(int pfd[], const char *cmd , const char * const argv[], const char
 
 	if ( pipe(pfddummy) == -1 || pipe(pfdin) == -1 || pipe(pfdout) == -1 || pipe(pfderr) == -1 )
 		return(-1);
+
 	if ( ( pid = vfork() ) == -1 )
 		return(-1);
 	else if (pid == 0) /* child process */
@@ -104,19 +105,17 @@ int eConsoleContainer::execute(eMainloop *context, const char *cmdline, const ch
 {
 	if (running())
 		return -1;
-	eDebug("[ServiceApp][eConsoleContainer] Starting %s", cmdline);
+
 	pid=-1;
 	killstate=0;
-	/* get one read, one write and the err pipe to the prog..  */
+
+	// get one read ,one write and the err pipe to the prog..
 	pid = bidirpipe(fd, cmdline, argv, m_cwd.empty() ? 0 : m_cwd.c_str());
 
 	if ( pid == -1 )
-	{
-		eDebug("[ServiceApp][eConsoleContainer] failed to start %s", cmdline);
 		return -3;
-	}
 
-	eDebug("[ServiceApp][eConsoleContainer] pipe in = %d, out = %d, err = %d", fd[0], fd[1], fd[2]);
+	// eDebug("pipe in = %d, out = %d, err = %d", fd[0], fd[1], fd[2]);
 
 	::fcntl(fd[0], F_SETFL, O_NONBLOCK);
 	::fcntl(fd[1], F_SETFL, O_NONBLOCK);
@@ -333,7 +332,7 @@ void eConsoleContainer::readyWrite(int what)
 				close(filefd[0]);
 				filefd[0] = -1;
 				::close(fd[1]);
-/*				eDebug("[ServiceApp][eConsoleContainer] readFromFile done - closing stdin pipe");  */
+				// eDebug("[ServiceApp][eConsoleContainer] readFromFile done - closing stdin pipe");
 				fd[1]=-1;
 				dataSent(0);
 				out->stop();
