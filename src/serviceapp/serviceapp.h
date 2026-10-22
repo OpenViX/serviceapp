@@ -57,6 +57,7 @@ class eServiceApp : public sigc::trackable,
 	bool m_paused;
 	bool m_debug;
 	int m_framerate, m_width, m_height, m_progressive, m_hdr_type;
+	bool m_osd_gamma_set; // we reported a non-SDR gamma to the EGL OSD and must reset it
 
 	typedef std::map<uint32_t, subtitleMessage> subtitle_pages_map;
 	typedef std::pair<uint32_t, subtitleMessage> subtitle_pages_map_pair;

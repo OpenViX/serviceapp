@@ -1,5 +1,6 @@
 #include "Python.h"
 #include <algorithm>
+#include <dlfcn.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
 #include <sstream>
@@ -33,6 +34,47 @@ enum {
 	EXTEPLAYER3,
 	GSTPLAYER,
 };
+
+/*
+ * HDR10 OSD tone mapping hook.
+ *
+ * enigma2's EGL OSD (gEGLDC) raises/tone-maps the OSD while the video is HDR10, so
+ * the OSD does not look dim. It is driven by gEGLDC::setVideoGamma(), which enigma2
+ * calls itself for DVB (eDVBVideo) and for eServiceMP3. With serviceapp the video
+ * decoder is owned by the external player (exteplayer3), so enigma2 never sees the
+ * decoder's gamma event - we have to report it ourselves.
+ *
+ * The symbol is looked up at run time: HAVE_EGL is not visible to plugins, and an
+ * enigma2 built without EGL (or without this feature) simply does not have it.
+ * enigma2 is linked with -rdynamic, so it is found with RTLD_DEFAULT.
+ */
+static void setOsdVideoGamma(int gamma) {
+	typedef void (*SetVideoGammaFn)(int);
+	static SetVideoGammaFn fn = nullptr;
+	static bool looked_up = false;
+	if (!looked_up) {
+		looked_up = true;
+		// gEGLDC::setVideoGamma(int)
+		fn = (SetVideoGammaFn)dlsym(RTLD_DEFAULT, "_ZN6gEGLDC13setVideoGammaEi");
+		eDebug("[eServiceApp] HDR10 OSD tone mapping hook %s", fn ? "available" : "not available (no EGL OSD)");
+	}
+	if (fn)
+		fn(gamma);
+}
+
+// serviceapp/sHDRType: 0=SDR 1=HDR10 2=HLG 3=HDR  ->  decoder gamma: 0=SDR 1=HDR 2=ST2084(HDR10) 3=HLG
+static int hdrTypeToGamma(int hdr_type) {
+	switch (hdr_type) {
+		case 1:
+			return 2;
+		case 2:
+			return 3;
+		case 3:
+			return 1;
+		default:
+			return 0;
+	}
+}
 
 enum {
 	OPTIONS_SERVICEMP3,
@@ -185,7 +227,7 @@ DEFINE_REF(eServiceApp);
 
 eServiceApp::eServiceApp(eServiceReference ref)
 	: m_ref(ref), m_subservices_checked(false), player(0), extplayer(0), m_resolver(0), m_resolve_uri("resolve://"), m_event_started(false), m_paused(false), m_debug(false), m_framerate(-1),
-	  m_width(-1), m_height(-1), m_progressive(-1), m_hdr_type(0), m_subtitle_pages(0), m_selected_subtitle_track(0), m_prev_subtitle_message(0), m_prev_subtitle_fps(1), m_prev_decoder_time(-1),
+	  m_width(-1), m_height(-1), m_progressive(-1), m_hdr_type(0), m_osd_gamma_set(false), m_subtitle_pages(0), m_selected_subtitle_track(0), m_prev_subtitle_message(0), m_prev_subtitle_fps(1), m_prev_decoder_time(-1),
 	  m_decoder_time_valid_state(0) {
 	options = createOptions(ref);
 	// OpenBH supplies the playback path directly in eServiceReference::path.
@@ -220,6 +262,11 @@ eServiceApp::eServiceApp(eServiceReference ref)
 };
 
 eServiceApp::~eServiceApp() {
+	// Normally already done in stop(); only act if we are still the one who set it.
+	if (m_osd_gamma_set) {
+		m_osd_gamma_set = false;
+		setOsdVideoGamma(0);
+	}
 	delete options;
 	delete player;
 	delete extplayer;
@@ -645,6 +692,10 @@ void eServiceApp::gotExtPlayerMessage(int message) {
 			if (!player->videoGetTrackInfo(v,0))
 			{
 				m_hdr_type = v.hdr_type;
+				// Tell the EGL OSD about HDR10 (tone mapping + OSD gain) - see setOsdVideoGamma().
+				// Also reported for SDR/HLG so the OSD goes back to normal.
+				setOsdVideoGamma(hdrTypeToGamma(m_hdr_type));
+				m_osd_gamma_set = m_hdr_type > 0;
 			}
 			m_event(this, evUpdatedInfo);
 			break;
@@ -742,6 +793,12 @@ RESULT eServiceApp::stop() {
 	if (m_resolver)
 		m_resolver->stop();
 	player->stop();
+	// Playback is over: the OSD must not stay in HDR10 mode (the next service may be SDR).
+	if (m_osd_gamma_set) {
+		m_osd_gamma_set = false;
+		m_hdr_type = 0;
+		setOsdVideoGamma(0);
+	}
 	return 0;
 }
 
