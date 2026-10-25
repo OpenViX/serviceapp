@@ -575,6 +575,8 @@ void eServiceApp::signalEventUpdatedInfo() {
 	if (m_debug)
 		eDebug("eServiceApp::signalEventUpdatedInfo");
 	m_event(this, evUpdatedInfo);
+	// the player knows by now whether the stream has a length
+	m_event(this, evSeekableStatusChanged);
 	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
 	if (is_passthrough_fix_enabled)
 	{
@@ -902,6 +904,11 @@ RESULT eServiceApp::isCurrentlySeekable() {
 	/* a player that winds itself does it at every speed and backwards (bit 4)
 	 * unless the user wants jumps; for the others just assume that seeking and
 	 * fast/slow winding are possible */
+	/* a live network stream has no length, a VOD stream has one;
+	 * -2: the player runs but has no length */
+	int lengthMs;
+	if (m_ref.path.find("://") != std::string::npos && player->getLength(lengthMs) == -2)
+		return 0;
 	pts_t length;
 	if (player->canWind() && getLength(length) == 0 && length > 0)
 		return eConfigManager::getConfigBoolValue("config.seek.withjumps", true) ? 3 : 7;
