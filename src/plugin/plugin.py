@@ -4,7 +4,6 @@ from os.path import isfile
 from Components.Console import Console
 from Components.config import config, ConfigSubsection, ConfigSelection, ConfigBoolean, ConfigSubDict, ConfigInteger, ConfigYesNo
 from Components.Label import Label
-from Components.SystemInfo import SystemInfo
 from Plugins.Plugin import PluginDescriptor
 from Screens.InfoBar import InfoBar, MoviePlayer
 from Screens.MessageBox import MessageBox
@@ -41,6 +40,7 @@ config_serviceapp.servicemp3 = ConfigSubsection()
 config_serviceapp.servicemp3.replace = ConfigBoolean(default=False, descriptions={False: _("original"), True: _("serviceapp")})
 config_serviceapp.servicemp3.replace.value = serviceapp_client.isServiceMP3Replaced()
 config_serviceapp.servicemp3.player = ConfigSelection(default="gstplayer", choices=player_choices)
+
 config_serviceapp.options = ConfigSubDict()
 config_serviceapp.options["servicemp3"] = ConfigSubsection()
 config_serviceapp.options["servicegstplayer"] = ConfigSubsection()
