@@ -124,7 +124,6 @@ public:
 	virtual int sendSubtitleSelectTrack(int trackId){ return -1;}
 	virtual int sendSeekTo(int seconds){ return -1;}
 	virtual int sendSeekRelative(int seconds){ return -1;}
-	virtual int sendOutputClear(){ return -1;}
 	// speed > 1 winds forwards, < 0 backwards
 	virtual int sendFastForward(int speed){ return -1;}
 };
@@ -218,8 +217,6 @@ class PlayerBackend: public sigc::trackable, public eThread, public eMainloop, p
 			tSeekTo,
 			seekRelative,
 			tSeekRelative,
-			outputClear,
-			tOutputClear,
 			tFastForward,
 			audioSelect,
 			tAudioSelect,
@@ -360,7 +357,6 @@ public:
 	int resume();
 	int seekTo(int seconds);
 	int seekRelative(int seconds);
-	int outputClear();
 	int fastForward(int speed);
 	bool canWind(){return pPlayer->canWind();}
 	int getLength(int& mseconds);

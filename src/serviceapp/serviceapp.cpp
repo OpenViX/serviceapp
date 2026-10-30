@@ -7,8 +7,6 @@
 
 #include <lib/base/cfile.h>
 #include <lib/base/eenv.h>
-#include <lib/base/esimpleconfig.h>
-#include <lib/base/nconfig.h>
 #include <lib/base/init.h>
 #include <lib/base/init_num.h>
 #include <lib/base/nconfig.h>
@@ -252,8 +250,6 @@ eServiceApp::eServiceApp(eServiceReference ref)
 	CONNECT(m_subtitle_sync_timer->timeout, eServiceApp::pushSubtitles);
 	m_event_updated_info_timer = eTimer::create(eApp);
 	CONNECT(m_event_updated_info_timer->timeout, eServiceApp::signalEventUpdatedInfo);
-	m_passthrough_fix_timer = eTimer::create(eApp);
-	CONNECT(m_passthrough_fix_timer->timeout, eServiceApp::passthroughFix);
 
 #ifdef HAVE_EPG
 	m_nownext_timer = eTimer::create(eApp);
@@ -282,28 +278,6 @@ eServiceApp::~eServiceApp() {
 	g_useUserSettings = false;
 };
 
-
-void eServiceApp::passthroughFix() {
-	eDebug("[ServiceApp] Setting 'passthrough' to force correct operation");
-	CFile::writeStr("/proc/stb/audio/ac3", "passthrough");
-	bool validposition = false;
-	pts_t ppos = 0;
-	if (getPlayPosition(ppos) >= 0) {
-		validposition = true;
-		ppos -= 90000;
-		if (ppos < 0)
-			ppos = 0;
-	}
-	if (validposition) {
-		/* flush */
-		seekTo(ppos);
-	}
-	/* Flush the exteplayer3 output without seeking the HLS/container stream.
-	 * The legacy seekTo() workaround performs OUTPUT_CLEAR followed by an
-	 * actual container seek, which causes a several-second interruption. */
-	if (player)
-		player->outputClear();
-}
 
 void eServiceApp::fillSubservices() {
 	m_subservice_vec.clear();
@@ -577,26 +551,6 @@ void eServiceApp::signalEventUpdatedInfo() {
 	m_event(this, evUpdatedInfo);
 	// the player knows by now whether the stream has a length
 	m_event(this, evSeekableStatusChanged);
-	bool is_passthrough_fix_enabled = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.passthrough_fix_enable", false);
-	if (is_passthrough_fix_enabled)
-	{
-		/* The AC3+ workaround must only run for the actual E-AC3/AC3+
-		 * audio track. Checking /proc/stb/audio/ac3 alone makes the
-		 * workaround run on AAC-LC streams too, because the proc setting
-		 * persists after an AC3+ service has been played. */
-		audioStream track;
-		int currentTrack = player ? player->audioGetCurrentTrackNum() : -1;
-		bool eac3_passthrough = player && currentTrack >= 0 &&
-			player->audioGetTrackInfo(track, currentTrack) == 0 &&
-			(track.description == "Dolby Atmos" || track.description == "Dolby Digital +" ||
-			 track.description == "A_EAC3" || track.description == "AC3+");
-		if (eac3_passthrough)
-		{
-			int passthrough_delay = eConfigManager::getConfigIntValue("config.plugins.serviceapp.passthrough_fix_delay", 0);
-			m_passthrough_fix_timer->stop();
-			m_passthrough_fix_timer->start(passthrough_delay, true);
-		}
-	}
 }
 
 void eServiceApp::urlResolved(int success) {
@@ -788,7 +742,7 @@ RESULT eServiceApp::start() {
 			headers = subservice.headers;
 		}
 	}
-	m_debug = eSimpleConfig::getBool("config.plugins.serviceapp.debug", false);
+	m_debug = eConfigManager::getConfigBoolValue("config.plugins.serviceapp.debug", false);
 	player->setDebug(m_debug);
 
 	// don't pass fragment part to player
@@ -954,10 +908,6 @@ int eServiceApp::getNumberOfTracks() {
 RESULT eServiceApp::selectTrack(unsigned int i)
 {
 	eDebug("eServiceApp::selectTrack = %d", i);
-	audioStream track;
-	bool eac3_passthrough = player->audioGetTrackInfo(track, i) == 0 &&
-		(track.description == "Dolby Atmos" || track.description == "Dolby Digital +" ||
-		 track.description == "A_EAC3" || track.description == "AC3+");
 	if (player->audioSelectTrack(i) < 0)
 	{
 		return -1;

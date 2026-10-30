@@ -70,7 +70,6 @@ class ExtEplayer3: public PlayerApp, public BasePlayer
 	int sendSubtitleSelectTrack(int trackId);
 	int sendSeekTo(int seconds);
 	int sendSeekRelative(int seconds);
-	int sendOutputClear();
 	int sendFastForward(int speed);
 };
 #endif
