@@ -1537,8 +1537,11 @@ static PyObject* exteplayer3_set_setting(PyObject* self, PyObject* args) {
 	bool truehdTranscoding;
 	bool aacHeTranscoding;
 	int rtmpProtocol;
+	/* optional, so that an older plugin still works */
+	bool dtsEac3Transcoding = false;
+	bool truehdEac3Transcoding = false;
 
-	if (!PyArg_ParseTuple(args, "ibbbbbbbbbbbi", &settingId, &aacSwDecoding, &dtsSwDecoding, &wmaSwDecoding, &lpcmInjection, &downmix, &ac3SwDecoding, &eac3SwDecoding, &mp3SwDecoding, &dtsTranscoding, &truehdTranscoding, &aacHeTranscoding, &rtmpProtocol))
+	if (!PyArg_ParseTuple(args, "ibbbbbbbbbbbi|bb", &settingId, &aacSwDecoding, &dtsSwDecoding, &wmaSwDecoding, &lpcmInjection, &downmix, &ac3SwDecoding, &eac3SwDecoding, &mp3SwDecoding, &dtsTranscoding, &truehdTranscoding, &aacHeTranscoding, &rtmpProtocol, &dtsEac3Transcoding, &truehdEac3Transcoding))
 		return NULL;
 
 	ExtEplayer3Options* options = NULL;
@@ -1567,6 +1570,8 @@ static PyObject* exteplayer3_set_setting(PyObject* self, PyObject* args) {
 		options->GetSettingMap()[EXT3_SW_DECODING_DTS].setValue(dtsSwDecoding);
 		options->GetSettingMap()[EXT3_TRANSCODE_DTS_AC3].setValue(dtsTranscoding);
 		options->GetSettingMap()[EXT3_TRANSCODE_TRUEHD_AC3].setValue(truehdTranscoding);
+		options->GetSettingMap()[EXT3_TRANSCODE_DTS_EAC3].setValue(dtsEac3Transcoding);
+		options->GetSettingMap()[EXT3_TRANSCODE_TRUEHD_EAC3].setValue(truehdEac3Transcoding);
 		options->GetSettingMap()[EXT3_TRANSCODE_AAC_HE].setValue(aacHeTranscoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_WMA].setValue(wmaSwDecoding);
 		options->GetSettingMap()[EXT3_SW_DECODING_MP3].setValue(mp3SwDecoding);
@@ -1634,7 +1639,7 @@ static PyMethodDef serviceappMethods[] = {
 	 " bufferSize - in kilobytes\n"
 	 " bufferDuration - in seconds\n"},
 	{"exteplayer3_set_setting", exteplayer3_set_setting, METH_VARARGS,
-	 "set exteplayer3 settings (setting_id, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding, eac3SwDecoding, mp3SwDecoding, dtsTranscoding, truehdTranscoding, aacHeTranscoding, rtmpProtocol)\n\n"
+	 "set exteplayer3 settings (setting_id, aacSwDecoding, dtsSwDecoding, wmaSwDecoding, lpcmInjection, downmix, ac3SwDecoding, eac3SwDecoding, mp3SwDecoding, dtsTranscoding, truehdTranscoding, aacHeTranscoding, rtmpProtocol[, dtsEac3Transcoding, truehdEac3Transcoding])\n\n"
 	 " setting_id - (0 - servicemp3, 1 - servicegst, 2 - serviceextep3, 3 - user)\n"
 	 " aacSwDecoding - (True, False)\n"
 	 " dtsSwDecoding - (True, False)\n"
@@ -1644,10 +1649,12 @@ static PyMethodDef serviceappMethods[] = {
 	 " ac3SwDecoding - (True, False)\n"
 	 " eac3SwDecoding - (True, False)\n"
 	 " mp3SwDecoding - (True, False)\n"
-	 " dtsTranscoding - (True, False)\n"
-	 " truehdTranscoding - (True, False)\n"
+	 " dtsTranscoding - DTS / DTS-HD to Dolby Digital (True, False)\n"
+	 " truehdTranscoding - TrueHD to Dolby Digital (True, False)\n"
 	 " aacHeTranscoding - (True, False)\n"
 	 " rtmpProtocol - (0|1|2)\n"
+	 " dtsEac3Transcoding - DTS / DTS-HD to Dolby Digital + (True, False), optional\n"
+	 " truehdEac3Transcoding - TrueHD to Dolby Digital + (True, False), optional\n"
 	},
 	{"serviceapp_set_setting", serviceapp_set_setting, METH_VARARGS,
 	 "set serviceapp settings (setting_id, HLSExplorer, autoSelectStream, connectionSpeedInKb, autoTurnOnSubtitles\n\n"

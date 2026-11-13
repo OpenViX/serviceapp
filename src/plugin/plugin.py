@@ -68,8 +68,8 @@ for key in list(config_serviceapp.exteplayer3.keys()):
 	config_serviceapp.exteplayer3[key].eac3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].ac3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].dts_swdecoding = ConfigYesNo(default=False)
-	config_serviceapp.exteplayer3[key].dts_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital"))])
-	config_serviceapp.exteplayer3[key].truehd_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital"))])
+	config_serviceapp.exteplayer3[key].dts_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital")), ("eac3", _("Dolby Digital +"))])
+	config_serviceapp.exteplayer3[key].truehd_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("ac3", _("Dolby Digital")), ("eac3", _("Dolby Digital +"))])
 	config_serviceapp.exteplayer3[key].aac_he_transcoding = ConfigSelection(default="no", choices=[("no", _("No")), ("aaclc", _("AAC-LC"))])
 	config_serviceapp.exteplayer3[key].mp3_swdecoding = ConfigYesNo(default=False)
 	config_serviceapp.exteplayer3[key].wma_swdecoding = ConfigYesNo(default=False)
@@ -143,7 +143,9 @@ def init_serviceapp_settings():
 			rtmp_proto_val,
 			player_cfg.dts_transcoding.value == "ac3",
 			player_cfg.truehd_transcoding.value == "ac3",
-			player_cfg.aac_he_transcoding.value == "aaclc",)
+			player_cfg.aac_he_transcoding.value == "aaclc",
+			player_cfg.dts_transcoding.value == "eac3",
+			player_cfg.truehd_transcoding.value == "eac3",)
 
 	if config_serviceapp.servicemp3.player.value == "gstplayer":
 		serviceapp_client.setServiceMP3GstPlayer()
@@ -174,8 +176,8 @@ class ServiceAppSettings(Setup):
 		config_list.append((self.indent + _("DTS software decoding"), exteplayer3_options_cfg.dts_swdecoding, _("Turn on DTS software decoding.")))
 		config_list.append((self.indent + _("MP3 software decoding"), exteplayer3_options_cfg.mp3_swdecoding, _("Turn on MP3 software decoding.")))
 		config_list.append((self.indent + _("WMA software decoding"), exteplayer3_options_cfg.wma_swdecoding, _("Turn on WMA1, WMA2, WMA/PRO software decoding.")))
-		config_list.append((self.indent + _("Dolby TrueHD transcoding"), exteplayer3_options_cfg.truehd_transcoding, _("Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital.")))
-		config_list.append((self.indent + _("DTS / DTS-HD transcoding"), exteplayer3_options_cfg.dts_transcoding, _("Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital.")))
+		config_list.append((self.indent + _("Dolby TrueHD transcoding"), exteplayer3_options_cfg.truehd_transcoding, _("Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital or Dolby Digital +.")))
+		config_list.append((self.indent + _("DTS / DTS-HD transcoding"), exteplayer3_options_cfg.dts_transcoding, _("Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital or Dolby Digital +.")))
 		config_list.append((self.indent + _("HE-AAC transcoding"), exteplayer3_options_cfg.aac_he_transcoding, _("Choose whether HE-AAC sound tracks should be transcoded to AAC-LC.")))
 		config_list.append((self.indent + _("Stereo downmix"), exteplayer3_options_cfg.downmix, _("Turn on downmix to stereo, when software decoding is in use")))
 		config_list.append((self.indent + _("LPCM injection"), exteplayer3_options_cfg.lpcm_injecion, _("Software decoder use LPCM for injection (otherwise wav PCM will be used)")))

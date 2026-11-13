@@ -9,6 +9,8 @@ const std::string  EXT3_SW_DECODING_EAC3           = "eac3_swdec";
 const std::string  EXT3_SW_DECODING_DTS            = "dts_swdec";
 const std::string  EXT3_TRANSCODE_DTS_AC3          = "dts_ac3_transcode";
 const std::string  EXT3_TRANSCODE_TRUEHD_AC3       = "truehd_ac3_transcode";
+const std::string  EXT3_TRANSCODE_DTS_EAC3         = "dts_eac3_transcode";
+const std::string  EXT3_TRANSCODE_TRUEHD_EAC3      = "truehd_eac3_transcode";
 const std::string  EXT3_TRANSCODE_AAC_HE           = "aac_he_transcode";
 const std::string  EXT3_SW_DECODING_MP3            = "mp3_swdec";
 const std::string  EXT3_SW_DECODING_WMA            = "wma_swdec";
@@ -47,6 +49,8 @@ ExtEplayer3Options::ExtEplayer3Options()
 	settingMap[EXT3_SW_DECODING_DTS]            = SettingEntry ("-d", "bool");
 	settingMap[EXT3_TRANSCODE_DTS_AC3]          = SettingEntry ("-D", "bool");
 	settingMap[EXT3_TRANSCODE_TRUEHD_AC3]       = SettingEntry ("-X", "bool");
+	settingMap[EXT3_TRANSCODE_DTS_EAC3]         = SettingEntry ("-K", "bool");
+	settingMap[EXT3_TRANSCODE_TRUEHD_EAC3]      = SettingEntry ("-Z", "bool");
 	settingMap[EXT3_TRANSCODE_AAC_HE]           = SettingEntry ("-Y", "bool");
 	settingMap[EXT3_SW_DECODING_MP3]            = SettingEntry ("-m", "bool");
 	settingMap[EXT3_SW_DECODING_WMA]            = SettingEntry ("-w", "bool");
