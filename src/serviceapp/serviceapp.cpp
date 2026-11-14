@@ -908,6 +908,17 @@ int eServiceApp::getNumberOfTracks() {
 RESULT eServiceApp::selectTrack(unsigned int i)
 {
 	eDebug("eServiceApp::selectTrack = %d", i);
+	if (m_paused)
+	{
+		audioStream track;
+		if (player->audioGetTrackInfo(track, i) < 0)
+			return -1;
+		// GstPlayer may reset a selector changed in PAUSED when it resumes,
+		// so keep the choice and apply it in restoreAudioTrack() on resume.
+		m_cachedAudioTrack = i;
+		saveAudioTrack(i);
+		return 0;
+	}
 	if (player->audioSelectTrack(i) < 0)
 	{
 		return -1;

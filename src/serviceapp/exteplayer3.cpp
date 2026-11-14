@@ -47,11 +47,12 @@ ExtEplayer3Options::ExtEplayer3Options()
 	settingMap[EXT3_SW_DECODING_EAC3]           = SettingEntry ("-e", "bool");
 	settingMap[EXT3_SW_DECODING_AC3]            = SettingEntry ("-3", "bool");
 	settingMap[EXT3_SW_DECODING_DTS]            = SettingEntry ("-d", "bool");
-	settingMap[EXT3_TRANSCODE_DTS_AC3]          = SettingEntry ("-D", "bool");
-	settingMap[EXT3_TRANSCODE_TRUEHD_AC3]       = SettingEntry ("-X", "bool");
-	settingMap[EXT3_TRANSCODE_DTS_EAC3]         = SettingEntry ("-K", "bool");
-	settingMap[EXT3_TRANSCODE_TRUEHD_EAC3]      = SettingEntry ("-Z", "bool");
-	settingMap[EXT3_TRANSCODE_AAC_HE]           = SettingEntry ("-Y", "bool");
+	/* exteplayer3 185: the OpenBH transcoding options are long options */
+	settingMap[EXT3_TRANSCODE_DTS_AC3]          = SettingEntry ("--dts-ac3", "bool");
+	settingMap[EXT3_TRANSCODE_TRUEHD_AC3]       = SettingEntry ("--truehd-ac3", "bool");
+	settingMap[EXT3_TRANSCODE_DTS_EAC3]         = SettingEntry ("--dts-eac3", "bool");
+	settingMap[EXT3_TRANSCODE_TRUEHD_EAC3]      = SettingEntry ("--truehd-eac3", "bool");
+	settingMap[EXT3_TRANSCODE_AAC_HE]           = SettingEntry ("--heaac-aaclc", "bool");
 	settingMap[EXT3_SW_DECODING_MP3]            = SettingEntry ("-m", "bool");
 	settingMap[EXT3_SW_DECODING_WMA]            = SettingEntry ("-w", "bool");
 	settingMap[EXT3_LPCM_INJECTION]             = SettingEntry ("-l", "bool");
