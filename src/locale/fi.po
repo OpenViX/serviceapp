@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ServiceApp / enigma2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-10 13:04+0300\n"
-"PO-Revision-Date: 2026-10-11 17:28+0300\n"
+"POT-Creation-Date: 2026-11-15 13:13+0200\n"
+"PO-Revision-Date: 2026-11-15 15:32+0200\n"
 "Last-Translator: Orlandox\n"
 "Language-Team: Orlandox\n"
 "Language: fi\n"
@@ -11,89 +11,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
-#: ../plugin/plugin.py:174
+#: ../plugin/plugin.py:173
 msgid "AAC software decoding"
 msgstr "AAC:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:76
+#: ../plugin/plugin.py:73
 msgid "AAC-LC"
 msgstr "AAC-LC"
 
-#: ../plugin/plugin.py:176
+#: ../plugin/plugin.py:175
 msgid "AC3 software decoding"
 msgstr "AC3:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:190
+#: ../plugin/plugin.py:189
 msgid "Auto select stream"
 msgstr "Valitse striimi automaattisesti"
 
-#: ../plugin/plugin.py:188
+#: ../plugin/plugin.py:187
 msgid "Auto turn on subtitles"
 msgstr "Tekstitys automaattisesti päälle"
 
-#: ../plugin/plugin.py:188
+#: ../plugin/plugin.py:187
 msgid "Automatically turn on subtitles if available."
 msgstr "Tekstitys automaattisesti päälle, jos saatavilla."
 
-#: ../plugin/plugin.py:171
+#: ../plugin/plugin.py:170
 msgid "Buffer duration"
 msgstr "Puskurin kesto"
 
-#: ../plugin/plugin.py:170
+#: ../plugin/plugin.py:169
 msgid "Buffer size"
 msgstr "Puskurin koko"
 
-#: ../plugin/plugin.py:181
-msgid "Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital."
-msgstr "Valitse, muunnetaanko DTS / DTS-HD -ääniraidat Dolby Digital -muotoon."
-
 #: ../plugin/plugin.py:180
-msgid "Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital."
-msgstr "Valitse, muunnetaanko Dolby TrueHD -ääniraidat Dolby Digital -muotoon."
+msgid "Choose whether DTS / DTS-HD sound tracks should be transcoded to Dolby Digital or Dolby Digital +."
+msgstr "Valitse, muunnetaanko DTS / DTS-HD -ääniraidat Dolby Digital- tai Dolby Digital + -muotoon."
 
-#: ../plugin/plugin.py:182
+#: ../plugin/plugin.py:179
+msgid "Choose whether Dolby TrueHD sound tracks should be transcoded to Dolby Digital or Dolby Digital +."
+msgstr "Valitse, muunnetaanko Dolby TrueHD -ääniraidat Dolby Digital- tai Dolby Digital + -muotoon."
+
+#: ../plugin/plugin.py:181
 msgid "Choose whether HE-AAC sound tracks should be transcoded to AAC-LC."
 msgstr "Valitse, muunnetaanko HE-AAC -ääniraidat AAC-LC -muotoon."
 
-#: ../plugin/plugin.py:191
+#: ../plugin/plugin.py:190
 msgid "Connection speed"
 msgstr "Yhteyden nopeus"
 
-#: ../plugin/plugin.py:181
+#: ../plugin/plugin.py:180
 msgid "DTS / DTS-HD transcoding"
 msgstr "DTS / DTS-HD -muunnos"
 
-#: ../plugin/plugin.py:177
+#: ../plugin/plugin.py:176
 msgid "DTS software decoding"
 msgstr "DTS:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:265
+#: ../plugin/plugin.py:222
+msgid "Debug"
+msgstr "Debug"
+
+#: ../plugin/plugin.py:264
 msgid "Detecting exteplayer3 player ..."
 msgstr "Exteplayer3-soittimen havaitseminen ..."
 
-#: ../plugin/plugin.py:264
+#: ../plugin/plugin.py:263
 msgid "Detecting gstreamer player ..."
 msgstr "Gstreamer-soittimen havaitseminen ..."
 
-#: ../plugin/plugin.py:74 ../plugin/plugin.py:75
+#: ../plugin/plugin.py:71 ../plugin/plugin.py:72
 msgid "Dolby Digital"
 msgstr "Dolby Digital"
 
-#: ../plugin/plugin.py:180
+#: ../plugin/plugin.py:71 ../plugin/plugin.py:72
+msgid "Dolby Digital +"
+msgstr "Dolby Digital +"
+
+#: ../plugin/plugin.py:179
 msgid "Dolby TrueHD transcoding"
 msgstr "Dolby TrueHD -muunnos"
 
-#: ../plugin/plugin.py:175
+#: ../plugin/plugin.py:174
 msgid "EAC3 software decoding"
 msgstr "EAC3:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:169
+#: ../plugin/plugin.py:168
 msgid "Embedded subtitles"
 msgstr "Sulautetut tekstitykset"
 
-#: ../plugin/plugin.py:208
+#: ../plugin/plugin.py:207
 msgid "Enigma2 playback system"
 msgstr "Enigma2-toistojärjestelmä"
 
@@ -106,108 +114,108 @@ msgstr ""
 "Enigma2-toistojärjestelmää muutettiin ja Enigma2 pitäisi käynnistää uudelleen\n"
 "Haluatko käynnistää sen uudelleen nyt?"
 
-#: ../plugin/plugin.py:197
+#: ../plugin/plugin.py:196
 msgid "ExtEplayer3"
 msgstr "ExtEplayer3"
 
-#: ../plugin/plugin.py:202
+#: ../plugin/plugin.py:201
 msgid "GstPlayer"
 msgstr "GstPlayer"
 
-#: ../plugin/plugin.py:182
+#: ../plugin/plugin.py:181
 msgid "HE-AAC transcoding"
 msgstr "HE-AAC -muunnos"
 
-#: ../plugin/plugin.py:189
+#: ../plugin/plugin.py:188
 msgid "HLS Explorer"
 msgstr "HLS Explorer"
 
-#: ../plugin/plugin.py:184
+#: ../plugin/plugin.py:183
 msgid "LPCM injection"
 msgstr "LPCM-injektio"
 
-#: ../plugin/plugin.py:178
+#: ../plugin/plugin.py:177
 msgid "MP3 software decoding"
 msgstr "MP3:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:70 ../plugin/plugin.py:74 ../plugin/plugin.py:75
-#: ../plugin/plugin.py:76
+#: ../plugin/plugin.py:67 ../plugin/plugin.py:71 ../plugin/plugin.py:72
+#: ../plugin/plugin.py:73
 msgid "No"
 msgstr "Ei"
 
-#: ../plugin/plugin.py:355
+#: ../plugin/plugin.py:352
 msgid "Play with ServiceExtEplayer3"
 msgstr "Toista ServiceExtEplayer3:lla"
 
-#: ../plugin/plugin.py:357
+#: ../plugin/plugin.py:354
 msgid "Play with ServiceGstPlayer"
 msgstr "Toista ServiceGstPlayer:lla"
 
-#: ../plugin/plugin.py:210
+#: ../plugin/plugin.py:209
 msgid "Player"
 msgstr "Soitin"
 
-#: ../plugin/plugin.py:185
+#: ../plugin/plugin.py:184
 msgid "RTMP protocol implementation"
 msgstr "RTMP-protokollan toteutus"
 
-#: ../plugin/plugin.py:168
+#: ../plugin/plugin.py:167
 msgid "Select sink which you want to use."
 msgstr "Valitse upotus, jota haluat käyttää."
 
-#: ../plugin/plugin.py:208
+#: ../plugin/plugin.py:207
 msgid "Select the player which will be used for Enigma2 playback."
 msgstr "Valitse soitin, jota käytetään Enigma2-toistoon."
 
-#: ../plugin/plugin.py:210
+#: ../plugin/plugin.py:209
 msgid "Select the player which will be used in serviceapp for Enigma2 playback."
 msgstr "Valitse soitin, jota käytetään serviceapp:ssa Enigma2-toistoon."
 
-#: ../plugin/plugin.py:165 ../plugin/plugin.py:337 ../plugin/plugin.py:353
-#: ../plugin/plugin.py:355 ../plugin/plugin.py:357
+#: ../plugin/plugin.py:164 ../plugin/plugin.py:334 ../plugin/plugin.py:350
+#: ../plugin/plugin.py:352 ../plugin/plugin.py:354
 msgid "ServiceApp"
 msgstr "ServiceApp"
 
-#: ../plugin/plugin.py:221
+#: ../plugin/plugin.py:220
 #, python-format
 msgid "ServiceExtEplayer3 (%s)"
 msgstr "ServiceExtEplayer3 (%s)"
 
-#: ../plugin/plugin.py:218
+#: ../plugin/plugin.py:217
 #, python-format
 msgid "ServiceGstPlayer (%s)"
 msgstr "ServiceGstPlayer (%s)"
 
-#: ../plugin/plugin.py:212
+#: ../plugin/plugin.py:211
 #, python-format
 msgid "ServiceMp3 (%s)"
 msgstr "ServiceMp3 (%s)"
 
-#: ../plugin/plugin.py:171
+#: ../plugin/plugin.py:170
 msgid "Set buffer duration in seconds."
 msgstr "Aseta puskurin kesto sekunneissa."
 
-#: ../plugin/plugin.py:170
+#: ../plugin/plugin.py:169
 msgid "Set buffer size in kilobytes."
 msgstr "Aseteta puskurin koko kilotavuissa."
 
-#: ../plugin/plugin.py:191
+#: ../plugin/plugin.py:190
 msgid "Set connection speed in kb/s, according to which you want to have streams auto-selected"
 msgstr "Aseta yhteysnopeus kt/s, jonka mukaan haluat striimit automaattisesti valittavan"
 
-#: ../plugin/plugin.py:185
+#: ../plugin/plugin.py:184
 msgid "Set which RTMP protocol implementation will be used for playback of RTMP streams"
 msgstr "Määritä, mitä RTMP-protokollan toteutusta käytetään RTMP-striimien toistoon"
 
-#: ../plugin/plugin.py:168
+#: ../plugin/plugin.py:167
 msgid "Sink"
 msgstr "Upotus"
 
-#: ../plugin/plugin.py:184
+#: ../plugin/plugin.py:183
 msgid "Software decoder use LPCM for injection (otherwise wav PCM will be used)"
 msgstr "Ohjelmistodekooderi käyttää LPCM:ää injektioon (muuten käytetään wav PCM:ää)"
 
-#: ../plugin/plugin.py:183
+#: ../plugin/plugin.py:182
 msgid "Stereo downmix"
 msgstr "Muunnos stereoksi"
 
@@ -215,87 +223,91 @@ msgstr "Muunnos stereoksi"
 msgid "Stop playing this movie?"
 msgstr "Lopetetaanko tämän elokuvan toisto?"
 
-#: ../plugin/plugin.py:70
+#: ../plugin/plugin.py:67
 msgid "To AAC ADTS"
 msgstr "AAC ADTS:ksi"
 
-#: ../plugin/plugin.py:70
+#: ../plugin/plugin.py:67
 msgid "To AAC LATM"
 msgstr "AAC LATM:ksi"
 
-#: ../plugin/plugin.py:174
+#: ../plugin/plugin.py:173
 msgid "Turn on AAC software decoding."
 msgstr "Ota AAC:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:176
+#: ../plugin/plugin.py:175
 msgid "Turn on AC3 software decoding."
 msgstr "Ota AC3:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:177
+#: ../plugin/plugin.py:176
 msgid "Turn on DTS software decoding."
 msgstr "Ota DTS:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:175
+#: ../plugin/plugin.py:174
 msgid "Turn on EAC3 software decoding."
 msgstr "Ota EAC3:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:178
+#: ../plugin/plugin.py:177
 msgid "Turn on MP3 software decoding."
 msgstr "Ota MP3:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:179
+#: ../plugin/plugin.py:178
 msgid "Turn on WMA1, WMA2, WMA/PRO software decoding."
 msgstr "Ota WMA1:n, WMA2:n, WMA/PRO:n ohjelmistodekoodaus käyttöön."
 
-#: ../plugin/plugin.py:190
+#: ../plugin/plugin.py:189
 msgid "Turn on auto-selection of streams according to set Connection speed."
 msgstr "Ota automaattinen striimien valinta käyttöön asetetun yhteysnopeuden mukaan."
 
-#: ../plugin/plugin.py:183
+#: ../plugin/plugin.py:222
+msgid "Turn on debug messages"
+msgstr "Ota debug-viestit käyttöön"
+
+#: ../plugin/plugin.py:182
 msgid "Turn on downmix to stereo, when software decoding is in use"
 msgstr "Ota muunnos stereoksi käyttöön, kun ohjelmistodekoodaus on käytössä"
 
-#: ../plugin/plugin.py:189
+#: ../plugin/plugin.py:188
 msgid "Turn on explorer to retrieve different quality streams from HLS variant playlist and select them via subservices."
 msgstr "Ota Explorer käyttöön hakeaksesi erilaatuisia striimeja HLS-version soittolistasta ja valita ne alipalvelujen kautta."
 
-#: ../plugin/plugin.py:169
+#: ../plugin/plugin.py:168
 msgid "Turn on the embedded subtitles support."
 msgstr "Ota sulautettujen tekstitysten tuki käyttöön."
 
-#: ../plugin/plugin.py:179
+#: ../plugin/plugin.py:178
 msgid "WMA software decoding"
 msgstr "WMA:n ohjelmistodekoodaus"
 
-#: ../plugin/plugin.py:34
+#: ../plugin/plugin.py:29
 msgid "experimental"
 msgstr "kokeellinen"
 
-#: ../plugin/plugin.py:36
+#: ../plugin/plugin.py:31
 msgid "exteplayer3"
 msgstr "exteplayer3"
 
-#: ../plugin/plugin.py:36
+#: ../plugin/plugin.py:31
 msgid "gstplayer"
 msgstr "gstplayer"
 
-#: ../plugin/plugin.py:197 ../plugin/plugin.py:202
+#: ../plugin/plugin.py:196 ../plugin/plugin.py:201
 msgid "not installed"
 msgstr "ei asennettu"
 
-#: ../plugin/plugin.py:31 ../plugin/plugin.py:44
+#: ../plugin/plugin.py:26 ../plugin/plugin.py:40
 msgid "original"
 msgstr "alkuperäinen"
 
-#: ../plugin/plugin.py:44
+#: ../plugin/plugin.py:40
 msgid "serviceapp"
 msgstr "serviceapp"
 
-#: ../plugin/plugin.py:353
+#: ../plugin/plugin.py:350
 msgid "setup player framework"
 msgstr "soittimen puitteiden asetus"
 
-#: ../plugin/plugin.py:197 ../plugin/plugin.py:202
+#: ../plugin/plugin.py:196 ../plugin/plugin.py:201
 #, python-format
 msgid "version %s"
 msgstr "versio %s"
